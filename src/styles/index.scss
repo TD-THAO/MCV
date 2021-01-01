@@ -1,0 +1,23 @@
+$col-red: red;
+$col-green: green;
+
+.col-red {
+  color: $col-red;
+}
+
+.col-green {
+  color: $col-green;
+}
+// $primary: red;
+
+ul li {
+  list-style: none;
+}
+
+#app {
+  color: #555 !important;
+}
+
+@import './vendors/index.scss';
+@import './components/index.scss';
+@import './pages/index.scss';

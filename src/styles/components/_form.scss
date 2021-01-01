@@ -1,0 +1,26 @@
+.c-form {
+  label {
+    font-weight: bold;
+  }
+
+  .label-radio{
+    font-weight: normal;
+  }
+
+  .invalid-error {
+    &__input {
+      border-color: #dc3545;
+    }
+
+    &__mess {
+      color: #dc3545;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+  }
+
+  .icon-required {
+    color: #dc3545;
+  }
+}
+

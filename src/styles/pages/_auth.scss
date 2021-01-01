@@ -1,0 +1,38 @@
+.auth {
+  background: url(~@/assets/bg-01.jpg) no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+
+  &-form {
+    -webkit-transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    width: 550px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &__footer {
+      color: #908f8f;
+
+      a {
+        font-weight: bold;
+        color: #908f8f;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    label {
+      width: 100%;
+      text-align: left;
+    }
+  }
+}
