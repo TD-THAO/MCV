@@ -6,16 +6,16 @@ export interface AuthenticateInput {
   displayName: string;
   phoneNumber: string;
   photoURL: string;
-  password:string;
+  password: string;
 }
 
 export class Authenticate implements Deserializable<Authenticate>, AuthenticateInput {
   uid: string = '';
   email: string = '';
-  displayName: string = ''
-  phoneNumber: string = ''
-  photoURL: string = ''
-  password:string;
+  displayName: string = '';
+  phoneNumber: string = '';
+  photoURL: string = '';
+  password: string;
 
   deserialize(input: Partial<AuthenticateInput>): Authenticate {
     if (!input) {

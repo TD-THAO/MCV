@@ -1,51 +1,22 @@
 <template>
   <div class="mg-sidebar">
-    <ul class="list-group sidebar-list__group-parent">
-      <li class="list-group-item text-left">
-        <div class="sidebar-list__item-header d-flex justify-content-between align-items-center">
-          <i class="fa fa-newspaper-o mr-1"></i>
-          <a href="" class="flex-1"><span>Quản lý hồ sơ</span></a>
-          <i class="fa fa-angle-down text-right"></i>
-        </div>
+    <div class="mg-sidebar__logo p-3 text-center">
+      <h3 class="mb-0">FIWOR</h3>
+    </div>
 
-        <ul class="list-group sidebar-list__group-children">
-          <li class="list-group-item text-left border-0 p-3">
-            <i class="fa fa-circle-o font-10 "></i>
-            <router-link to="/admin/complete-profile">
-              <span>Cập nhật thông tin hồ sơ</span>
-            </router-link>
-          </li>
-          <li class="list-group-item text-left border-0 p-3">
-            <i class="fa fa-circle-o font-10"></i>
-            <router-link to="/admin/create-profile">
-              <span>Tạo hồ sơ</span>
-            </router-link>
-          </li>
-        </ul>
-      </li>
-
-      <li class="list-group-item text-left">
-        <div class="sidebar-list__item-header d-flex justify-content-between align-items-center">
-          <i class="fa fa-user mr-1"></i>
-          <a href="" class="flex-1"><span>Quản lý tài khoản</span></a>
-          <i class="fa fa-angle-down text-right"></i>
-        </div>
-        <ul class="list-group sidebar-list__group-children">
-          <li class="list-group-item text-left border-0 p-3">
-            <i class="fa fa-circle-o font-10"></i>
-            <router-link to="/admin">
-              <span>Cập nhật thông tin</span>
-            </router-link>
-          </li>
-          <li class="list-group-item text-left border-0 p-3">
-            <i class="fa fa-circle-o font-10"></i>
-            <router-link to="/admin/change-password">
-              <span>Đổi mật khẩu</span>
-            </router-link>
-          </li>
-        </ul>
+    <div class="mg-sidebar__main mt-3">
+      <ul v-for="item in sidebarMenus" :key="item.name"
+        class="nav">
+        <li class="nav-item"
+          :class="activeRoute(item) ? 'active' : ''">
+          <router-link class="nav-link d-flex align-items-center"
+            :to="item.path">
+            <i :class="item.icon"></i>
+            <span class="ml-2">{{ item.name }}</span>
+          </router-link>
       </li>
     </ul>
+    </div>
   </div>
 </template>
 
@@ -58,39 +29,78 @@ import firebase from 'firebase';
   },
 })
 export default class Sidebar extends Vue {
-  mounted() {
+  sidebarMenus = [
+    {
+      name: 'Cập nhật thông tin hồ sơ',
+      icon: 'fa fa-address-card',
+      path: '/admin/complete-profile',
+    },
+    {
+      name: 'Tạo hồ sơ',
+      icon: 'fa fa-address-book',
+      path: '/admin/create-profile',
+    },
+    {
+      name: 'Cập nhật thông tin cá nhân',
+      icon: 'fa fa-user',
+      path: '/admin',
+    },
+    {
+      name: 'Đổi mật khẩu',
+      icon: 'fa fa-th',
+      path: '/admin/change-password',
+    },
+  ];
+
+  activeRoute(item: any) {
+    if (item.path === this.$route.path) {
+      return true;
+    }
+
+    return false;
   }
 }
 </script>
 
 <style scoped lang="scss">
-// @import 'ChangePassword.scss';
 .mg-sidebar {
-  .fa {
-    width: 20px;
-  }
+  height: 100%;
+  background: rgba(149, 104, 213, .62);
+  color: #fff;
+
   a {
-    text-decoration: none;
-    color: black;
+    color: #fff;
   }
-}
 
-.sidebar-list {
-  &__group-parent {
-    box-shadow: 0 0 21px 0 rgba(89, 102, 122, 0.1);
-    height: 100vh;
+  &__logo {
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+  }
 
-    .list-group-item {
-      border: 0;
-      padding: 0;
-      background: rgba(255, 251, 251, 27%);
-      color: #fff;
+  &__main {
+    .nav {
+      flex-direction: column;
+
+      &-item {
+        text-transform: uppercase;
+        line-height: 30px;
+        font-size: 12px;
+        font-weight: 600;
+        margin: 5px 15px;
+
+        &.active,
+        &:hover {
+          .nav-link {
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.23);
+          }
+        }
+      }
+
+      &-link {
+        padding: 10px 15px;
+        transition: all .3s;
+      }
     }
-  }
-
-  &__item-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    padding: 1rem;
   }
 }
 </style>

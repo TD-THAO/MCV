@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mg-header">
     <nav class="navbar navbar-expand-lg navbar-light border-bottom">
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
@@ -26,40 +26,29 @@ import Toast from '@/shared/utils/Toast';
 import { Authenticate } from '@/shared/models/authenticate';
 import { mapActions } from 'vuex';
 
-@Component({
-  components: {},
-  computed: {
-  }
-})
+@Component({})
 export default class Header extends Vue {
   isLoading: boolean = false;
   auth: Authenticate = new Authenticate();
-
-  mounted() {
-  }
 
   logout() {
     this.isLoading = true;
     firebase.auth().signOut().then((res: any) => {
       this.isLoading = false;
       this.$router.push('/login');
-    },(error: any) => {
+    }, (error: any) => {
       this.isLoading = false;
       Toast.handleError(error);
     });
   }
-
-  // getIdToken() {
-  //   firebase.auth().currentUser?.getIdTokenResult(true).then(function(idToken) {
-  //    console.log(idToken, 'idToken');
-
-  //   }).catch(function(error) {
-  //     console.log(error);
-
-  //   });
-  // }
 }
 </script>
 
 <style scoped lang='scss'>
+.mg-header {
+  .navbar {
+    background: #fff;
+    height: 66px;
+  }
+}
 </style>

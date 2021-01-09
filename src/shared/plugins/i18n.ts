@@ -9,19 +9,20 @@ const i18n = new VueI18n({
   messages: {
     vi: {
       fields: {
-        email: 'Email',
-        password: 'Mật khẩu',
-        password_confirmation: 'Xác nhận mật khẩu',
-        user_name: 'Họ tên',
-        phone: 'Số điện thoại',
-        address: 'Địa chỉ',
-        day: 'Ngày',
-        month: 'Tháng',
-        year: 'Năm',
-        city: 'Tỉnh/Thành phố',
-        district: 'Huyện/Quận',
-        new_password: 'Mật khẩu mới',
-        confirm_new_password: 'Xác nhận mật khẩu mới',
+        email: 'email',
+        password: 'mật khẩu',
+        password_confirmation: 'xác nhận mật khẩu',
+        user_name: 'họ tên',
+        phone: 'số điện thoại',
+        address: 'địa chỉ',
+        day: 'ngày',
+        month: 'tháng',
+        year: 'năm',
+        city: 'tỉnh/thành phố',
+        district: 'huyện/quận',
+        new_password: 'mật khẩu mới',
+        confirm_new_password: 'xác nhận mật khẩu mới',
+        name: 'tên',
       },
 
       validation: {
