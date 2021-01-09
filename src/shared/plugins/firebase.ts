@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: 'AIzaSyBQ2s_CeO_CSv0KohTvt3wEaSYEXbLpt-I',
-  authDomain: 'mcv-online.firebaseapp.com',
-  databaseURL: 'https://mcv-online-default-rtdb.firebaseio.com',
-  projectId: 'mcv-online',
-  storageBucket: 'mcv-online.appspot.com',
-  messagingSenderId: '391447987364',
-  appId: '1:391447987364:web:8a044b6ac91fff8f8b9231',
+  apiKey: 'AIzaSyBG_3gVFF1ihV8PwExGFMzPMCCz4oS7kgA',
+  authDomain: 'cv-online-f76f3.firebaseapp.com',
+  databaseURL: 'https://cv-online-f76f3.firebaseio.com',
+  projectId: 'cv-online-f76f3',
+  storageBucket: 'cv-online-f76f3.appspot.com',
+  messagingSenderId: '810103509180',
+  appId: '1:810103509180:web:999d4244291edfcd4740b9',
   // measurementId: 'G-8GSGZQ44ST'
 };
 

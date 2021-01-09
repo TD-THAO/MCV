@@ -3,17 +3,16 @@ import { FIREBASE_ERRORS, FIREBASE_ERRORS_MESSAGES } from '../enums/firebase-err
 
 class Toast {
   success(message: string, options?: any) {
-    return Vue.$toast.success(message, options)
+    return Vue.$toast.success(message, options);
   }
 
   error(message: string, options?: any) {
-    return Vue.$toast.error(message, options)
+    return Vue.$toast.error(message, options);
   }
 
   handleError(error: any) {
     const errorCode = error.code;
     const errorMessage = error.message;
-console.log(errorMessage);
 
     if (errorCode === FIREBASE_ERRORS.USER_NOT_FOUND) {
       return this.error(FIREBASE_ERRORS_MESSAGES.USER_NOT_FOUND);
