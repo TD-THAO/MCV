@@ -36,9 +36,9 @@ export default class Sidebar extends Vue {
       path: '/admin/complete-profile',
     },
     {
-      name: 'Tạo hồ sơ',
+      name: 'Mẫu hồ sơ',
       icon: 'fa fa-address-book',
-      path: '/admin/create-profile',
+      path: '/admin/templates',
     },
     {
       name: 'Cập nhật thông tin cá nhân',

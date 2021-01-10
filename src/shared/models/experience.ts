@@ -31,7 +31,7 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
     return this;
   }
 
-  formExperienceString() {
+  formJSONString() {
     const data = {
       name_job: this. name_job,
       company: this.company,

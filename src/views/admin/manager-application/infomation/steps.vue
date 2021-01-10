@@ -61,7 +61,7 @@ export default class ManagerApplicationInfo extends Vue {
 </script>
 
 <style scoped lang="scss">
-$col-main: #3e96d6;
+$col-main: #7366ff;
 
 .progressbar {
   li {

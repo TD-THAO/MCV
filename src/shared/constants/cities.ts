@@ -1,4 +1,4 @@
-export const CITY = [
+export const CITIES = [
   'Thành phố Hồ Chí Minh',
   'Hầ Nội',
   'Đà Nẵng',

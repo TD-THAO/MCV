@@ -15,6 +15,10 @@ const routes: RouteConfig[] = [
     component: ErrorPage,
   },
   {
+    path: '',
+    redirect: { name: 'Login' },
+  },
+  {
     path: '*',
     redirect: { name: 'PageNotFound' },
   },

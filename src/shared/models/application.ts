@@ -35,7 +35,7 @@ export class Application implements Deserializable<Application>, ApplicationInpu
     return this;
   }
 
-  formApplicationString() {
+  formJSONString() {
     const data = {
       position: this.position,
       academic_level: this.academic_level,

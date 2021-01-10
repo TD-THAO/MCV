@@ -35,7 +35,7 @@ export class Education implements Deserializable<Education>, EducationInput {
     return this;
   }
 
-  formEducationString() {
+  formJSONString() {
     const data = {
       training_center: this. training_center,
       faculty_training: this.faculty_training,

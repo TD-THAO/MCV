@@ -35,7 +35,7 @@
           <div class="col-6">
             <div class="form-group d-flex" v-for="(item, index) in foreignLanguages" :key="index">
               <label for="school" class="w-50">{{ item.name }}</label>
-              <select class="form-control" v-model="selectedLanguages">
+              <select class="form-control" v-model="item.level">
                 <option value="" disabled hidden>Trình độ</option>
                 <option v-for="(level, i) in levels" :key="i">
                   {{ level }}
@@ -61,6 +61,7 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
+import { SKILLS, LEVELS } from '@/shared/constants/skill';
 
 @Component({
   components: {
@@ -68,43 +69,30 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class SkillInfomation extends Vue {
-  skills = [
-    'Kỹ năng giao tiếp',
-    'Kỹ năng tổ chức',
-    'Kỹ năng lãnh đạo',
-    'Kỹ năng thuyết trình',
-    'Kỹ năng làm việc theo nhóm',
-    'Lập kế hoạch',
-    'Giải quyết vấn đề',
-    'Tư duy sáng tạo',
-    'Dễ thích nghi với môi trường mới',
-    'Quản lí thời gian hiệu quả',
-  ];
+  skills = SKILLS;
 
-  levels = [
-    'Sơ cấp', 'Trung cấp', 'Cao cấp', 'Bản ngữ',
-  ];
+  levels = LEVELS;
 
   foreignLanguages = [
     {
       name: 'Tiếng Anh',
-      level: '',
+      level: 'Sơ cấp',
     },
     {
       name: 'Tiếng Pháp',
-      level: '',
+      level: 'Sơ cấp',
     },
     {
       name: 'Tiếng Trung',
-      level: '',
+      level: 'Sơ cấp',
     },
     {
       name: 'Tiếng Nhật',
-      level: '',
+      level: 'Sơ cấp',
     },
     {
       name: 'Tiếng Hàn',
-      level: '',
+      level: 'Sơ cấp',
     },
   ];
 

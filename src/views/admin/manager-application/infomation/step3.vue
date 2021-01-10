@@ -17,7 +17,7 @@
               >
                 <select class="form-control" v-model="education.training_center">
                   <option value="" disabled hidden>Chọn tên trường</option>
-                  <option v-for="item in training_centers" :key="item">
+                  <option v-for="(item, index) in training_places" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -52,7 +52,7 @@
                 <div class="col-6">
                   <select class="form-control" v-model="education.start_at_month">
                     <option value="" disabled hidden>Chọn tháng</option>
-                    <option v-for="item in months" :key="item">
+                    <option v-for="(item, index) in months" :key="index">
                       {{ item }}
                     </option>
                   </select>
@@ -60,7 +60,7 @@
                 <div class="col-6">
                   <select class="form-control" v-model="education.start_at_year">
                     <option value="" disabled hidden>Chọn năm</option>
-                    <option v-for="item in years" :key="item">
+                    <option v-for="(item, index) in years" :key="index">
                       {{ item }}
                     </option>
                   </select>
@@ -80,7 +80,7 @@
               >
                 <select class="form-control" v-model="education.faculty_training">
                   <option value="" disabled hidden>Chọn tên khoa</option>
-                  <option v-for="item in faculty_trainings" :key="item">
+                  <option v-for="(item, index) in facultys" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -98,7 +98,7 @@
               >
                 <select class="form-control" v-model="education.rate">
                   <option value="" disabled hidden>Chọn xếp loại</option>
-                  <option v-for="item in rates" :key="item">
+                  <option v-for="(item, index) in rates" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -113,7 +113,7 @@
                 <div class="col-6">
                   <select class="form-control" v-model="education.end_at_month">
                     <option value="" disabled hidden>Chọn tháng</option>
-                    <option v-for="item in months" :key="item">
+                    <option v-for="(item, index) in months" :key="index">
                       {{ item }}
                     </option>
                   </select>
@@ -121,7 +121,7 @@
                 <div class="col-6">
                   <select class="form-control" v-model="education.end_at_year">
                     <option value="" disabled hidden>Chọn năm</option>
-                    <option v-for="item in years" :key="item">
+                    <option v-for="(item, index) in years" :key="index">
                       {{ item }}
                     </option>
                   </select>
@@ -135,7 +135,7 @@
               type="button"
               class="btn btn-primary"
               :disabled="invalid"
-              @click="addInfo"
+              @click="submitForm"
             >
               Thêm mới
             </button>
@@ -147,61 +147,106 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import { Education } from '@/shared/models/education';
 import { MONTH, YEAR } from '@/shared/constants/date';
+import { RATES, FACULTYS, TRAINING_PLACES } from '@/shared/constants/education';
+import { mapState } from 'vuex';
+import { Authenticate } from '@/shared/models/authenticate';
+import EducationApi from '@/shared/api/Education';
+import Toast from '@/shared/utils/Toast';
+
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
   },
+  computed: {
+    ...mapState('auth', [
+      'auth',
+    ]),
+  },
 })
 export default class EducationInfomation extends Vue {
   education: Education = new Education();
-  training_centers = ['hi'];
-  faculty_trainings = [
-    'Tin học',
-    'Sư phạm tin',
-  ];
-  rates = [
-    'Yếu',
-    'Trung Bình',
-    'Khá',
-    'Giỏi',
-    'Xuất sắc',
-  ];
+  auth: Authenticate;
+  userId: string = '';
 
+  isLoading: boolean = false;
+  isNew: boolean = false;
+
+  training_places: string[] = TRAINING_PLACES;
+  facultys: string[] = FACULTYS;
+  rates: string[] = RATES;
   months: number[] = MONTH;
   years: number[] = YEAR;
 
+  @Watch('auth')
+  watchAuth(newVal: Authenticate, oldVal: Authenticate) {
+    this.userId = newVal.uid;
+    this.getEducationInfo(newVal.uid);
+  }
+
   mounted() {
-    console.log(this.education);
-
-    this.getEducationInfo();
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getEducationInfo(this.auth.uid);
+    }
   }
 
-  addInfo() {
-    // Call api to update user info
-    console.log(this.education.formEducationString());
+  submitForm() {
+    if (this.isNew) {
+      this.createEducation();
+      return;
+    }
+    this.updateEducation();
   }
 
-  getEducationInfo() {
-    const data = {
-      // name: 'Da Thao',
-      // email: 'tdthao29@gmail.com',
-      // phone: '0777919749',
-      // city: '',
-      // district: '',
-      // address: '',
-      // gender: true,
-      // marital_status: false,
-      // day: '',
-      // month: '',
-      // year: '',
-    };
+  createEducation() {
+    this.isLoading = true;
+    EducationApi.createWithKey(this.userId, this.education.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật bằng cấp thành công');
+      this.isLoading = false;
+      this.isNew = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
 
-    this.education = new Education().deserialize(data);
+  updateEducation() {
+    this.isLoading = true;
+    EducationApi.update(this.userId, this.education.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật bằng cấp thành công');
+      this.isLoading = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
+
+  getEducationInfo(uid: string) {
+    this.isLoading = true;
+
+    EducationApi.getApplicationInfo(uid)
+    .then((res: any) => {
+      this.isLoading = false;
+      if (!res) {
+        this.isNew = true;
+        return;
+      }
+      this.isNew = false;
+      this.education = new Education().deserialize(res);
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 }
 </script>
