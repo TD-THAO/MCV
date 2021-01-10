@@ -6,11 +6,6 @@ import ManagerApplicationInfoStep4 from '@/views/admin/manager-application/infom
 import ManagerApplicationInfoStep5 from '@/views/admin/manager-application/infomation/step5.vue';
 import Templates from '@/views/admin/manager-application/templates/index.vue';
 
-const authMeta = {
-  // guest: true,
-  // authorize: [],
-};
-
 export default [
   {
     path: 'complete-profile',

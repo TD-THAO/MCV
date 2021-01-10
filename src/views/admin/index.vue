@@ -8,7 +8,6 @@
       <Header />
 
       <div clas="admin-ctn">
-        <!-- <Breadcrumb /> -->
         <div class="mt-3">
           <router-view></router-view>
         </div>
@@ -21,7 +20,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Header from '@/layouts/Header.vue';
 import Sidebar from '@/layouts/Sidebar.vue';
-import Breadcrumb from '@/components/Breadcrumb.vue';
 import firebase from 'firebase';
 import { Authenticate } from '@/shared/models/authenticate';
 
@@ -29,7 +27,6 @@ import { Authenticate } from '@/shared/models/authenticate';
   components: {
     Header,
     Sidebar,
-    Breadcrumb,
   },
 })
 export default class ManagerApplication extends Vue {
