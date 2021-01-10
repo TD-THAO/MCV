@@ -252,6 +252,8 @@
         </div>
       </div>
     </ValidationObserver>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -261,17 +263,19 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import range from 'lodash/range';
 import { User } from '@/shared/models/user';
 import { DAY, MONTH, YEAR } from '@/shared/constants/date';
-import { CITY } from '@/shared/constants/cities';
+import { CITIES } from '@/shared/constants/cities';
 import { DISTRICT} from '@/shared/constants/districts';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { Authenticate } from '@/shared/models/authenticate';
 import UserApi from '@/shared/api/User';
 import Toast from '@/shared/utils/Toast';
+import PageLoader from '@/components/PageLoader.vue';
 
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
+    PageLoader,
   },
    computed: {
     ...mapState('auth', [
@@ -283,7 +287,7 @@ export default class PersonalInfomation extends Vue {
   days: number[] = DAY;
   months: number[] = MONTH;
   years: number[] = YEAR;
-  cities: string[] = CITY;
+  cities: string[] = CITIES;
   districts: string[] = DISTRICT;
   user: User = new User();
   auth: Authenticate;
@@ -292,12 +296,19 @@ export default class PersonalInfomation extends Vue {
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
-    // this.isLoading = false;
     this.userId = newVal.uid;
     this.getUserInfo(newVal.uid);
   }
 
+  mounted() {
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getUserInfo(this.auth.uid);
+    }
+  }
+
   updateInfo() {
+    this.isLoading = true;
     UserApi.update(this.userId, this.user.formJSONString())
     .then((res: any) => {
       Toast.success('Cập nhật tài khoản thành công');
@@ -310,6 +321,8 @@ export default class PersonalInfomation extends Vue {
   }
 
   getUserInfo(uid: string) {
+    this.isLoading = true;
+
     UserApi.getUserInfo(uid)
     .then((res: any) => {
       this.user = new User().deserialize(res);

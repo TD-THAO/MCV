@@ -101,7 +101,7 @@
               type="button"
               class="btn btn-primary"
               :disabled="invalid"
-              @click="addInfo"
+              @click="submitForm"
             >
               Thêm mới
             </button>
@@ -113,38 +113,104 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import { Experience } from '@/shared/models/experience';
 import { MONTH, YEAR } from '@/shared/constants/date';
+import { mapState } from 'vuex';
+import { Authenticate } from '@/shared/models/authenticate';
+import ExperienceApi from '@/shared/api/Experience';
+import Toast from '@/shared/utils/Toast';
+
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
   },
+  computed: {
+    ...mapState('auth', [
+      'auth',
+    ]),
+  },
 })
 export default class ExperienceInfomation extends Vue {
   experience: Experience = new Experience();
+  auth: Authenticate;
+  userId: string = '';
+
+  isLoading: boolean = false;
+  isNew: boolean = false;
   months: number[] = MONTH;
   years: number[] = YEAR;
 
+  @Watch('auth')
+  watchAuth(newVal: Authenticate, oldVal: Authenticate) {
+    this.userId = newVal.uid;
+    this.getExpInfo(newVal.uid);
+  }
+
   mounted() {
-    console.log(this.experience);
-
-    this.getExperienceInfo();
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getExpInfo(this.auth.uid);
+    }
   }
 
-  addInfo() {
-    // Call api to update user info
-    console.log(this.experience.formExperienceString());
+  submitForm() {
+    console.log(this.userId);
+
+    if (this.isNew) {
+      this.createEducation();
+      return;
+    }
+
+    this.updateEducation();
   }
 
-  getExperienceInfo() {
-    const data = {
+  createEducation() {
+    this.isLoading = true;
+    ExperienceApi.createWithKey(this.userId, this.experience.formJSONString())
+    .then((res: any) => {
+      Toast.success('Create kinh nghiệm thành công');
+      this.isLoading = false;
+      this.isNew = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
 
-    };
+  updateEducation() {
+    this.isLoading = true;
+    ExperienceApi.update(this.userId, this.experience.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật kinh nghiệm thành công');
+      this.isLoading = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
 
-    this.experience = new Experience().deserialize(data);
+  getExpInfo(uid: string) {
+    this.isLoading = true;
+
+    ExperienceApi.getApplicationInfo(uid)
+    .then((res: any) => {
+      this.isLoading = false;
+      if (!res) {
+        this.isNew = true;
+        return;
+      }
+      this.isNew = false;
+      this.experience = new Experience().deserialize(res);
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 }
 </script>

@@ -37,7 +37,7 @@
               >
                 <select class="form-control" v-model="application.years_experience">
                   <option value="" disabled hidden>Chọn số năm kinh nghiệm</option>
-                  <option v-for="item in yearsExperience" :key="item">
+                  <option v-for="(item, index) in yearsExperience" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -55,7 +55,7 @@
               >
                 <select class="form-control" v-model="application.career">
                   <option value="" disabled hidden>Ngành nghề</option>
-                  <option v-for="item in careers" :key="item">
+                  <option v-for="(item, index) in careers" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -73,7 +73,7 @@
               >
                 <select class="form-control" v-model="application.rank">
                   <option value="" disabled hidden>Cấp bậc</option>
-                  <option v-for="item in ranks" :key="item">
+                  <option v-for="(item, index) in ranks" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -93,7 +93,7 @@
               >
                 <select class="form-control" v-model="application.academic_level">
                   <option value="" disabled hidden>Trình độ học vấn</option>
-                  <option v-for="item in academic_levels" :key="item">
+                  <option v-for="(item, index) in levels" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -111,7 +111,7 @@
               >
                 <select class="form-control" v-model="application.workplace">
                   <option value="" disabled hidden>Chọn nơi làm việc mà bạn muốn</option>
-                  <option v-for="item in workplaces" :key="item">
+                  <option v-for="(item, index) in workplaces" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -129,7 +129,7 @@
               >
                 <select class="form-control" v-model="application.type_work">
                   <option value="" disabled hidden>Chọn loại hình công việc</option>
-                  <option v-for="item in type_works" :key="item">
+                  <option v-for="(item, index) in type_works" :key="index">
                     {{ item }}
                   </option>
                 </select>
@@ -147,8 +147,8 @@
               >
                 <select class="form-control" v-model="application.salary">
                   <option value="" disabled hidden>Chọn mức lương bạn muốn</option>
-                  <option v-for="item in salaries" :key="item">
-                    {{ item }}
+                  <option v-for="(item, index) in salaries" :key="index" :value="item.type">
+                    {{ item.value }}
                   </option>
                 </select>
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
@@ -161,7 +161,7 @@
               type="button"
               class="btn btn-primary"
               :disabled="invalid"
-              @click="updateInfo"
+              @click="submitForm"
             >
               Cập nhật
             </button>
@@ -169,93 +169,124 @@
         </div>
       </div>
     </ValidationObserver>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import { Application } from '@/shared/models/application';
+import ApplicationApi from '@/shared/api/Application';
+import Toast from '@/shared/utils/Toast';
+
+import {
+  RANKS,
+  LEVELS,
+  SALARIES,
+  TYPES_WORK,
+  YEARS_EXPERENCY,
+  CAREERS,
+} from '@/shared/constants/application';
+import { CITIES} from '@/shared/constants/cities';
+import { mapState } from 'vuex';
+import { Authenticate } from '@/shared/models/authenticate';
+import PageLoader from '@/components/PageLoader.vue';
 
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
+    PageLoader,
+  },
+  computed: {
+    ...mapState('auth', [
+      'auth',
+    ]),
   },
 })
 export default class ApplicationInfomation extends Vue {
   application: Application = new Application();
-  yearsExperience = [1, 2, 3];
-  careers = ['IT'];
-  ranks = [
-    'Mới tốt nghiệp/Thực tập sinh',
-    'Junior Developer',
-    'Senior Developer',
-    'Lead Developer',
-    'Architect',
-    'Project Manager',
-    'Product Manager',
-    'Developer Manager',
-    'Senior Leadership',
-  ];
-  academic_levels = [
-    'Trung Học',
-    'Trung Cấp',
-    'Cao Đẳng',
-    'Đại Học',
-    'Kỹ Sư',
-    'Cử nhân',
-    'Thạc Sĩ',
-    'Tiến Sĩ',
-  ];
-  workplaces = [
-    'Đà Nẵng',
-  ];
-  type_works = [
-    'Thực tập',
-    'Part time',
-    'Full time',
-    'Theo hợp đồng/ tư vấn',
-  ];
-  salaries = [
-    '1-5 triệu trở lên',
-    '5-10 triệu trở lên',
-    '10-15 triệu trở lên',
-    '15-20 triệu trở lên',
-    '30 triệu trở lên',
-  ];
+  auth: Authenticate;
+  userId: string = '';
+
+  isLoading: boolean = false;
+  isNew: boolean = false;
+
+  yearsExperience = YEARS_EXPERENCY;
+  careers = CAREERS;
+  ranks = RANKS;
+  levels = LEVELS;
+  workplaces = CITIES;
+  type_works = TYPES_WORK;
+  salaries = SALARIES;
+
+  @Watch('auth')
+  watchAuth(newVal: Authenticate, oldVal: Authenticate) {
+    this.userId = newVal.uid;
+    this.getApplicationInfo(newVal.uid);
+  }
 
   mounted() {
-    console.log(this.application);
-
-    this.getApplicationInfo();
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getApplicationInfo(this.auth.uid);
+    }
   }
 
-  updateInfo() {
-    // Call api to update user info
-    console.log(this.application.formApplicationString());
+  submitForm() {
+    if (this.isNew) {
+      this.createApplication();
+      return;
+    }
+    this.updateApplication();
   }
 
-  getApplicationInfo() {
-    const data = {
-      // name: 'Da Thao',
-      // email: 'tdthao29@gmail.com',
-      // phone: '0777919749',
-      // city: '',
-      // district: '',
-      // address: '',
-      // gender: true,
-      // marital_status: false,
-      // day: '',
-      // month: '',
-      // year: '',
-    };
+  createApplication() {
+    this.isLoading = true;
+    ApplicationApi.createWithKey(this.userId, this.application.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật hồ sơ thành công');
+      this.isLoading = false;
+      this.isNew = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
 
-    this.application = new Application().deserialize(data);
+  updateApplication() {
+    this.isLoading = true;
+    ApplicationApi.update(this.userId, this.application.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật hồ sơ thành công');
+      this.isLoading = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
+
+  getApplicationInfo(uid: string) {
+    this.isLoading = true;
+
+    ApplicationApi.getApplicationInfo(uid)
+    .then((res: any) => {
+      this.isLoading = false;
+      if (!res) {
+        this.isNew = true;
+        return;
+      }
+      this.isNew = false;
+      this.application = new Application().deserialize(res);
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 }
 </script>
-
-<style scoped lang='scss'>
-// @import 'PersonalInfomation.scss';
-</style>
