@@ -4,6 +4,7 @@ import ManagerApplicationInfoStep2 from '@/views/admin/manager-application/infom
 import ManagerApplicationInfoStep3 from '@/views/admin/manager-application/infomation/step3.vue';
 import ManagerApplicationInfoStep4 from '@/views/admin/manager-application/infomation/step4.vue';
 import ManagerApplicationInfoStep5 from '@/views/admin/manager-application/infomation/step5.vue';
+import Templates from '@/views/admin/manager-application/templates/index.vue';
 
 const authMeta = {
   // guest: true,
@@ -45,5 +46,10 @@ export default [
         redirect: { name: 'CompleteProfileStep1' },
       },
     ],
+  },
+  {
+    path: 'templates',
+    name: 'templates',
+    component: Templates,
   },
 ];
