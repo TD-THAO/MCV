@@ -6,7 +6,7 @@
     <ValidationObserver ref="personalInfoForm" tag="form" v-slot="{ invalid }">
       <div class="c-form">
         <div class="row">
-          <div class="col-6">
+          <div class="col-12 col-xl-6">
             <div class="form-group">
               <label for="username"
                 >Họ tên <span class="icon-required">*</span></label
@@ -27,7 +27,30 @@
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
               </ValidationProvider>
             </div>
+          </div>
 
+          <div class="col-12 col-xl-6">
+            <div class="form-group">
+              <label for="city"
+                >Tỉnh/Thành phố <span class="icon-required">*</span></label
+              >
+              <ValidationProvider
+                name="city"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <select class="form-control" v-model="user.city">
+                  <option value="" disabled hidden>Chọn Tỉnh/Thành phố</option>
+                  <option v-for="item in cities" :key="item">
+                    {{ item }}
+                  </option>
+                </select>
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6">
             <div class="form-group">
               <label for="phone-number"
                 >Số điện thoại <span class="icon-required">*</span></label
@@ -48,7 +71,30 @@
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
               </ValidationProvider>
             </div>
+          </div>
 
+          <div class="col-12 col-xl-6">
+            <div class="form-group">
+              <label for="district"
+                >Huyện/Quận <span class="icon-required">*</span></label
+              >
+              <ValidationProvider
+                name="district"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <select class="form-control" v-model="user.district">
+                  <option value="" disabled hidden>Chọn Huyện/Quận</option>
+                  <option v-for="item in districts" :key="item">
+                    {{ item }}
+                  </option>
+                </select>
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6">
             <div class="form-group row">
               <div class="col-4">
                 <label for="day"
@@ -60,7 +106,7 @@
                   v-slot="{ errors }"
                 >
                   <select class="form-control" v-model="user.day">
-                    <option value="" disabled hidden>--Chọn ngày--</option>
+                    <option value="" disabled hidden>Ngày</option>
                     <option v-for="item in days" :key="item">
                       {{ item }}
                     </option>
@@ -79,7 +125,7 @@
                   v-slot="{ errors }"
                 >
                   <select class="form-control" v-model="user.month">
-                    <option value="" disabled hidden>--Chọn tháng--</option>
+                    <option value="" disabled hidden>Tháng</option>
                     <option v-for="item in months" :key="item">
                       {{ item }}
                     </option>
@@ -98,7 +144,7 @@
                   v-slot="{ errors }"
                 >
                   <select class="form-control" v-model="user.year">
-                    <option value="" disabled hidden>--Chọn năm--</option>
+                    <option value="" disabled hidden>Năm</option>
                     <option v-for="item in years" :key="item">
                       {{ item }}
                     </option>
@@ -107,7 +153,32 @@
                 </ValidationProvider>
               </div>
             </div>
+          </div>
 
+          <div class="col-12 col-xl-6">
+            <div class="form-group">
+              <label for="address"
+                >Địa chỉ <span class="icon-required">*</span></label
+              >
+              <ValidationProvider
+                name="address"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  placeholder="Vui lòng nhập địa chỉ"
+                  v-model="user.address"
+                />
+
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6">
             <div class="form-group">
               <label for="email"
                 >Địa chỉ email <span class="icon-required">*</span></label
@@ -128,7 +199,9 @@
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
               </ValidationProvider>
             </div>
+          </div>
 
+          <div class="col-12">
             <div class="form-group">
               <label for="sex" class="mb-0"
                 >Giới tính <span class="icon-required">*</span></label
@@ -160,99 +233,10 @@
                 >
               </div>
             </div>
-
-            <div class="form-group">
-              <label for="marital-status" class="mb-0"
-                >Tình trạng hôn nhân <span class="icon-required">*</span></label
-              >
-              <div class="form-check form-check-inline ml-3">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="maritalStatus"
-                  id="inlineRadio1"
-                  value="false"
-                  v-model="user.marital_status"
-                />
-                <label class="form-check-label label-radio" for="inlineRadio1"
-                  >Độc thân</label
-                >
-              </div>
-              <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="maritalStatus"
-                  id="inlineRadio2"
-                  value="true"
-                  v-model="user.marital_status"
-                />
-                <label class="form-check-label label-radio" for="inlineRadio2"
-                  >Đã kết hôn</label
-                >
-              </div>
-            </div>
           </div>
 
-          <div class="col-6">
-            <div class="form-group">
-              <label for="city"
-                >Tỉnh/Thành phố <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="city"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <select class="form-control" v-model="user.city">
-                  <option value="" disabled hidden>Chọn Tỉnh/Thành phố</option>
-                  <option v-for="item in cities" :key="item">
-                    {{ item }}
-                  </option>
-                </select>
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
+          <div class="col-12">
 
-            <div class="form-group">
-              <label for="district"
-                >Huyện/Quận <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="district"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <select class="form-control" v-model="user.district">
-                  <option value="" disabled hidden>Chọn Huyện/Quận</option>
-                  <option v-for="item in districts" :key="item">
-                    {{ item }}
-                  </option>
-                </select>
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
-
-            <div class="form-group">
-              <label for="address"
-                >Địa chỉ <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="address"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  placeholder="Vui lòng nhập địa chỉ"
-                  v-model="user.address"
-                />
-
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
           </div>
 
           <div class="col-12 text-right">
