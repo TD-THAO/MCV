@@ -46,10 +46,10 @@ export default class Templates extends Vue {
   cursor: pointer;
 
   img {
-    transition: transform .5s; /* Animation */
+    transition: transform .5s;
 
     &:hover {
-      transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      transform: scale(1.2);
     }
   }
 }

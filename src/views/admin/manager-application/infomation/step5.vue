@@ -106,8 +106,6 @@ export default class SkillInfomation extends Vue {
 
   addInfo() {
     // Call api to update user info
-    console.log(this.selectedSkills);
-    console.log(this.selectedLanguages);
   }
 
   getSkillInfo() {
