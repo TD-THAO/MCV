@@ -15,11 +15,11 @@
                   type="checkbox"
                   :value="skill.value"
                   v-model="selectedSkills"
-                  id="skill-checkbox"
+                  :id="skill.value"
                 />
                 <label
                   class="form-check-label"
-                  for="skill-checkbox">
+                  :for="skill.value">
                   {{ skill.label }}
                 </label>
               </div>
@@ -91,10 +91,9 @@ export default class SkillInfomation extends Vue {
 
   getSkill(userId: string) {
     // this.isLoading = true;
-    this.selectedSkills = [];
     SkillApi.getSkill(this.userId)
     .then((res: any) => {
-      this.selectedSkills = res;
+      this.selectedSkills = res || [];
       // this.isLoading = false;
     })
     .catch((error: any) => {

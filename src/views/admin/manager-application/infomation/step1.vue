@@ -263,8 +263,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import range from 'lodash/range';
 import { User } from '@/shared/models/user';
 import { DAY, MONTH, YEAR } from '@/shared/constants/date';
-import { CITIES } from '@/shared/constants/cities';
-import { DISTRICT} from '@/shared/constants/districts';
+import { CITIES, DISTRICT } from '@/shared/constants/address';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { Authenticate } from '@/shared/models/authenticate';
 import UserApi from '@/shared/api/User';
@@ -301,7 +300,6 @@ export default class PersonalInfomation extends Vue {
   }
 
   mounted() {
-    console.log('step1')
     if (this.auth.uid) {
       this.userId = this.auth.uid;
       this.getUserInfo(this.auth.uid);

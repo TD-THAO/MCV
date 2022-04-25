@@ -106,8 +106,6 @@ export default class ExperienceInfomation extends Vue {
   }
 
   mounted() {
-    console.log(2222222)
-
     if (this.auth.uid) {
       this.userId = this.auth.uid;
       this.getExpInfo(this.userId);

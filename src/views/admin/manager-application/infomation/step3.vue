@@ -1,160 +1,68 @@
 <template>
-  <div class="mx-3 py-3">
-    <div class="d-flex justify-content-end mb-3">
+  <div>
+    <div class="col-12 text-right">
       <button
         type="button"
         class="btn btn-primary"
-        :disabled="invalid"
-        @click="submitForm"
+        @click="openModalCECertificate()"
       >
-        Thêm
+        <i class="fa fa-plus"></i>
       </button>
     </div>
 
-    <div class="bg-white px-4 py-3 c-card text-left">
-      <div class="admin-ctn__title">
+    <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
+      <div class="admin-ctn__title border-bottom">
         <h5 class="font-weight-bold mb-3">Học vấn bằng cấp</h5>
       </div>
-      <ValidationObserver ref="personalInfoForm" tag="form" v-slot="{ invalid }">
-        <div class="c-form">
-          <div class="row">
-            <div class="col-6">
-            <div class="form-group">
-                <label for="training_center">Trường, cơ sở, trung tâm đào tạo <span class="icon-required">*</span></label
-                >
-                <ValidationProvider
-                  name="training_center"
-                  rules="required"
-                  v-slot="{ errors }"
-                >
-                  <select class="form-control" v-model="education.training_center">
-                    <option value="" disabled hidden>Chọn tên trường</option>
-                    <option v-for="(item, index) in training_places" :key="index">
-                      {{ item }}
-                    </option>
-                  </select>
-                  <div class="invalid-error__mess">{{ errors[0] }}</div>
-                </ValidationProvider>
-              </div>
 
-              <div class="form-group">
-                <label for="name_certificate">Tên bằng cấp chứng chỉ <span class="icon-required">*</span></label>
+      <div class="c-table">
+        <div v-for="item in certificates" :key="item.id"
+          class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
+        >
+          <div>
+            <p class="mb-0">
+              <strong>{{ item.title }}</strong> -
+              <span class="text-black-50">{{ item.school_name }}</span>
+            </p>
+            <p class="small mb-0">
+              Từ năm {{ item.start_at }} đến  {{ item.end_at }}
+            </p>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-outline-secondary border-0"
+              @click="openModalCECertificate(item)"
+            >
+              <i class="fa fa-pencil-square-o"></i>
+            </button>
 
-                <ValidationProvider
-                  name="name_certificate"
-                  rules="required"
-                  v-slot="{ errors }"
-                >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name_certificate"
-                    placeholder="VD: Kỹ sư CNTT..."
-                    v-model="education.name_certificate"
-                  />
-
-                  <div class="invalid-error__mess">{{ errors[0] }}</div>
-                </ValidationProvider>
-              </div>
-
-              <div class="form-group">
-                <label for="start_at">Thời gian bắt đầu nhập học <span class="icon-required">*</span></label>
-
-                <div class="row">
-                  <div class="col-6">
-                    <select class="form-control" v-model="education.start_at_month">
-                      <option value="" disabled hidden>Chọn tháng</option>
-                      <option v-for="(item, index) in months" :key="index">
-                        {{ item }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-6">
-                    <select class="form-control" v-model="education.start_at_year">
-                      <option value="" disabled hidden>Chọn năm</option>
-                      <option v-for="(item, index) in years" :key="index">
-                        {{ item }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6">
-            <div class="form-group">
-                <label for="faculty_training">Khoa đào tạo <span class="icon-required">*</span></label
-                >
-                <ValidationProvider
-                  name="faculty_training"
-                  rules="required"
-                  v-slot="{ errors }"
-                >
-                  <select class="form-control" v-model="education.faculty_training">
-                    <option value="" disabled hidden>Chọn tên khoa</option>
-                    <option v-for="(item, index) in facultys" :key="index">
-                      {{ item }}
-                    </option>
-                  </select>
-                  <div class="invalid-error__mess">{{ errors[0] }}</div>
-                </ValidationProvider>
-              </div>
-
-              <div class="form-group">
-                <label for="rate">Xếp loại <span class="icon-required">*</span></label
-                >
-                <ValidationProvider
-                  name="rate"
-                  rules="required"
-                  v-slot="{ errors }"
-                >
-                  <select class="form-control" v-model="education.rate">
-                    <option value="" disabled hidden>Chọn xếp loại</option>
-                    <option v-for="(item, index) in rates" :key="index">
-                      {{ item }}
-                    </option>
-                  </select>
-                  <div class="invalid-error__mess">{{ errors[0] }}</div>
-                </ValidationProvider>
-              </div>
-
-                <div class="form-group">
-                <label for="end_at">Thời gian kết thúc <span class="icon-required">*</span></label>
-
-                <div class="row">
-                  <div class="col-6">
-                    <select class="form-control" v-model="education.end_at_month">
-                      <option value="" disabled hidden>Chọn tháng</option>
-                      <option v-for="(item, index) in months" :key="index">
-                        {{ item }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-6">
-                    <select class="form-control" v-model="education.end_at_year">
-                      <option value="" disabled hidden>Chọn năm</option>
-                      <option v-for="(item, index) in years" :key="index">
-                        {{ item }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 text-right">
-              <button
-                type="button"
-                class="btn btn-primary"
-                :disabled="invalid"
-                @click="submitForm"
-              >
-                Lưu
-              </button>
-            </div>
+            <button
+              type="button"
+              class="btn btn-outline-secondary border-0"
+              @click="openModalConfirmDelete(item)"
+            >
+              <i class="fa fa-trash-o"></i>
+            </button>
           </div>
         </div>
-      </ValidationObserver>
+        <p v-if="!certificates.length"
+          class="text-black-50 text-center p-3 mb-0"
+        >
+          Không có dữ liệu
+        </p>
+      </div>
+
+      <ModalCECertificate
+        name="modalCECertificate"
+        @submit="submitModalCE"
+      />
+
+      <ModalConfirmDelete
+        name="modalConfirmDelete"
+        content="Bạn có chắc chắn muốn xóa không?"
+        @submit="confirmDelete"
+      />
     </div>
   </div>
 </template>
@@ -162,18 +70,22 @@
 <script lang='ts'>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import { Education } from '@/shared/models/education';
-import { MONTH, YEAR } from '@/shared/constants/date';
-import { RATES, FACULTYS, TRAINING_PLACES } from '@/shared/constants/education';
 import { mapState } from 'vuex';
-import { Authenticate } from '@/shared/models/authenticate';
-import EducationApi from '@/shared/api/Education';
+
+import ModalCECertificate from '@/components/modal/ModalCECertificate.vue';
+import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
 import Toast from '@/shared/utils/Toast';
+import CertificateApi from '@/shared/api/Certificate';
+
+import { Certificate } from '@/shared/models/certificate';
+import { Authenticate } from '@/shared/models/authenticate';
 
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
+    ModalCECertificate,
+    ModalConfirmDelete,
   },
   computed: {
     ...mapState('auth', [
@@ -181,90 +93,76 @@ import Toast from '@/shared/utils/Toast';
     ]),
   },
 })
-export default class EducationInfomation extends Vue {
-  education: Education = new Education();
+export default class CertificateInfomation extends Vue {
+  certificates: Certificate[] = [];
   auth: Authenticate;
   userId: string = '';
-
   isLoading: boolean = false;
-  isNew: boolean = false;
-
-  training_places: string[] = TRAINING_PLACES;
-  facultys: string[] = FACULTYS;
-  rates: string[] = RATES;
-  months: number[] = MONTH;
-  years: number[] = YEAR;
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
     this.userId = newVal.uid;
-    this.getEducationInfo(newVal.uid);
+    this.getCertificate(newVal.uid);
   }
 
   mounted() {
-    console.log(333333)
     if (this.auth.uid) {
       this.userId = this.auth.uid;
-      this.getEducationInfo(this.auth.uid);
+      this.getCertificate(this.userId);
     }
   }
 
-  submitForm() {
-    if (this.isNew) {
-      this.createEducation();
-      return;
+  openModalCECertificate(item = null) {
+    const params = {
+      user_id: this.userId,
+      item
     }
-    this.updateEducation();
+
+    this.$modal.show('modalCECertificate', params);
   }
 
-  createEducation() {
-    this.isLoading = true;
-    EducationApi.create(this.userId, this.education.formJSONString())
-    .then((res: any) => {
-      Toast.success('Cập nhật bằng cấp thành công');
-      this.isLoading = false;
-      this.isNew = false;
-    })
-    .catch((error: any) => {
-      this.isLoading = false;
-      Toast.handleError(error);
-    });
+  openModalConfirmDelete(item: Certificate) {
+    this.$modal.show('modalConfirmDelete', { item });
   }
 
-  updateEducation() {
-    this.isLoading = true;
-    EducationApi.update(this.userId, this.education.formJSONString())
+  getCertificate(uid: string) {
+    // this.isLoading = true;
+    this.certificates = [];
+    CertificateApi.getCertificate(uid)
     .then((res: any) => {
-      Toast.success('Cập nhật bằng cấp thành công');
-      this.isLoading = false;
-    })
-    .catch((error: any) => {
-      this.isLoading = false;
-      Toast.handleError(error);
-    });
-  }
-
-  getEducationInfo(uid: string) {
-    this.isLoading = true;
-
-    EducationApi.getEducation(uid)
-    .then((res: any) => {
-      this.isLoading = false;
-      if (!res) {
-        this.isNew = true;
-        return;
+      if (res) {
+        Object.keys(res).map((key) => {
+          const item = new Certificate().deserialize({
+            id: key,
+            ...res[key]
+          });
+          this.certificates.push(item);
+        });
       }
-      this.isNew = false;
-      this.education = new Education().deserialize(res);
     })
     .catch((error: any) => {
-      this.isLoading = false;
+      // this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
+
+  submitModalCE() {
+    this.getCertificate(this.userId);
+  }
+
+  confirmDelete(item: any) {
+    // this.isSubmitting = true;
+    CertificateApi.remove(this.userId, item.id)
+    .then((res: any) => {
+      Toast.success('Xóa thành công');
+      this.$modal.hide('modalConfirmDelete');
+      this.getCertificate(this.userId);
+      // this.isSubmitting = false;
+    })
+    .catch((error: any) => {
+      // this.isSubmitting = false;
       Toast.handleError(error);
     });
   }
 }
 </script>
-
-<style scoped lang='scss'>
-
-</style>

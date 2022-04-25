@@ -1,33 +1,33 @@
 import { Deserializable } from '@/shared/interfaces/deserialize';
 
-export interface ApplicationInput {
+export interface ResumeInput {
   position: string;
   academic_level: string;
-  years_experience: number | string;
+  year_experience: number | string;
   workplace: string;
   career: string;
-  type_work: string;
   rank: string;
-  salary: number | string;
+  min_expected_salary: number | string;
+  max_expected_salary: number | string;
+  work_time: string;
 }
 
-export class Application implements Deserializable<Application>, ApplicationInput {
+export class Resume implements Deserializable<Resume>, ResumeInput {
   position: string;
   academic_level: string = '';
-  years_experience: number | string = '';
+  year_experience: number | string = '';
   workplace: string = '';
   career: string = '';
-  type_work: string = '';
   rank: string = '';
-  salary: number | string = '';
+  min_expected_salary: number | string = '';
+  max_expected_salary: number | string = '';
+  work_time: string = '';
 
   constructor() {
-    this.deserialize({
-
-    });
+    this.deserialize({});
   }
 
-  deserialize(input: Partial<ApplicationInput>): Application {
+  deserialize(input: Partial<ResumeInput>): Resume {
     if (!input) {
       return this;
     }
@@ -39,12 +39,12 @@ export class Application implements Deserializable<Application>, ApplicationInpu
     const data = {
       position: this.position,
       academic_level: this.academic_level,
-      years_experience: this.years_experience,
+      year_experience: this.year_experience,
       workplace: this.workplace,
       career: this.career,
-      type_work: this.type_work,
       rank: this.rank,
-      salary: this.salary,
+      min_expected_salary: this.min_expected_salary,
+      work_time: this.work_time,
     };
 
     return data;

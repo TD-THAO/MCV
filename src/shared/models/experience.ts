@@ -27,9 +27,7 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
     return `${this.end_at_month}/${this.end_at_year}`;
   }
   constructor() {
-    this.deserialize({
-
-    });
+    // this.deserialize({});
   }
 
   deserialize(input: Partial<ExperienceInput>): Experience {

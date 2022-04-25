@@ -19,8 +19,8 @@
                   type="text"
                   class="form-control"
                   id="position"
-                  placeholder="Vị trí/việc làm cần ứng tuyển"
-                  v-model="application.position"
+                  placeholder="Vui lòng nhập vị trí/ việc làm cần ứng tuyển"
+                  v-model="resume.position"
                 />
 
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
@@ -28,17 +28,62 @@
             </div>
 
             <div class="form-group">
-              <label for="years_experience">Số năm kinh nghiệm <span class="icon-required">*</span></label
+              <label for="academic_level">Trình độ học vấn <span class="icon-required">*</span></label
               >
               <ValidationProvider
-                name="years_experience"
+                name="academic_level"
                 rules="required"
                 v-slot="{ errors }"
               >
-                <select class="form-control" v-model="application.years_experience">
-                  <option value="" disabled hidden>Chọn số năm kinh nghiệm</option>
-                  <option v-for="(item, index) in yearsExperience" :key="index">
-                    {{ item }}
+                <select v-model="resume.academic_level"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn trình độ học vấn</option>
+                  <option v-for="item in academicLevels"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
+                  </option>
+                </select>
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+
+            <div class="form-group">
+              <label for="year_experience">Số năm kinh nghiệm <span class="icon-required">*</span></label
+              >
+              <ValidationProvider
+                name="year_experience"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <select v-model="resume.year_experience"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn số năm kinh nghiệm</option>
+                  <option v-for="item in yearsExperience"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
+                  </option>
+                </select>
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+
+            <div class="form-group">
+              <label for="rank">Cấp bậc <span class="icon-required">*</span></label
+              >
+              <ValidationProvider
+                name="rank"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <select v-model="resume.rank"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn cấp bậc</option>
+                  <option v-for="item in ranks"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
                   </option>
                 </select>
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
@@ -53,28 +98,13 @@
                 rules="required"
                 v-slot="{ errors }"
               >
-                <select class="form-control" v-model="application.career">
-                  <option value="" disabled hidden>Ngành nghề</option>
-                  <option v-for="(item, index) in careers" :key="index">
-                    {{ item }}
-                  </option>
-                </select>
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
-
-            <div class="form-group">
-              <label for="rank">Cấp bậc <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="rank"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <select class="form-control" v-model="application.rank">
-                  <option value="" disabled hidden>Cấp bậc</option>
-                  <option v-for="(item, index) in ranks" :key="index">
-                    {{ item }}
+                <select v-model="resume.career"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn ngành nghề</option>
+                  <option v-for="item in careers"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
                   </option>
                 </select>
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
@@ -83,35 +113,40 @@
           </div>
 
           <div class="col-6">
-             <div class="form-group">
-              <label for="academic_level">Trình độ học vấn <span class="icon-required">*</span></label
-              >
+            <div class="form-group">
+              <label for="min_expected_salary">Mức lương<span class="icon-required">*</span></label>
+
               <ValidationProvider
-                name="academic_level"
+                name="min_expected_salary"
                 rules="required"
                 v-slot="{ errors }"
               >
-                <select class="form-control" v-model="application.academic_level">
-                  <option value="" disabled hidden>Trình độ học vấn</option>
-                  <option v-for="(item, index) in levels" :key="index">
-                    {{ item }}
-                  </option>
-                </select>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="min_expected_salary"
+                  placeholder="Vui lòng nhập mức lương"
+                  v-model="resume.min_expected_salary"
+                />
+
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
               </ValidationProvider>
             </div>
 
-             <div class="form-group">
-              <label for="workplace">Nơi làm việc <span class="icon-required">*</span></label
+            <div class="form-group">
+              <label for="workplace">Nơi làm việc <span class="icon-required">*</span></label
               >
               <ValidationProvider
                 name="workplace"
                 rules="required"
                 v-slot="{ errors }"
               >
-                <select class="form-control" v-model="application.workplace">
-                  <option value="" disabled hidden>Chọn nơi làm việc mà bạn muốn</option>
-                  <option v-for="(item, index) in workplaces" :key="index">
+                <select v-model="resume.workplace"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn nơi làm việc</option>
+                  <option v-for="item in cities"
+                    :key="item"
+                    :value="item">
                     {{ item }}
                   </option>
                 </select>
@@ -120,35 +155,20 @@
             </div>
 
             <div class="form-group">
-              <label for="type_work">Loại hình công việc <span class="icon-required">*</span></label
+              <label for="work_time">Hình thức làm việc <span class="icon-required">*</span></label
               >
               <ValidationProvider
-                name="type_work"
+                name="work_time"
                 rules="required"
                 v-slot="{ errors }"
               >
-                <select class="form-control" v-model="application.type_work">
-                  <option value="" disabled hidden>Chọn loại hình công việc</option>
-                  <option v-for="(item, index) in type_works" :key="index">
-                    {{ item }}
-                  </option>
-                </select>
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
-
-            <div class="form-group">
-              <label for="salary">Mức lương <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="salary"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <select class="form-control" v-model="application.salary">
-                  <option value="" disabled hidden>Chọn mức lương bạn muốn</option>
-                  <option v-for="(item, index) in salaries" :key="index" :value="item.type">
-                    {{ item.value }}
+                <select v-model="resume.work_time"
+                  class="form-control" >
+                  <option value="" disabled hidden>Chọn hình thức làm việc</option>
+                  <option v-for="item in workTimes"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
                   </option>
                 </select>
                 <div class="invalid-error__mess">{{ errors[0] }}</div>
@@ -163,7 +183,7 @@
               :disabled="invalid"
               @click="submitForm"
             >
-              Cập nhật
+              Lưu
             </button>
           </div>
         </div>
@@ -175,24 +195,22 @@
 </template>
 
 <script lang='ts'>
+import { mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import { Application } from '@/shared/models/application';
-import ApplicationApi from '@/shared/api/Application';
 import Toast from '@/shared/utils/Toast';
-
+import PageLoader from '@/components/PageLoader.vue';
 import {
   RANKS,
-  LEVELS,
-  SALARIES,
-  TYPES_WORK,
-  YEARS_EXPERENCY,
-  CAREERS,
-} from '@/shared/constants/application';
-import { CITIES} from '@/shared/constants/cities';
-import { mapState } from 'vuex';
+  ACADEMIC_LEVELS,
+  YEARS_EXPERIENCE,
+  WORK_TIMES,
+  CAREERS
+} from '@/shared/constants/resume';
+import { CITIES} from '@/shared/constants/address';
 import { Authenticate } from '@/shared/models/authenticate';
-import PageLoader from '@/components/PageLoader.vue';
+import { Resume } from '@/shared/models/resume';
+import ResumeApi from '@/shared/api/Resume';
 
 @Component({
   components: {
@@ -206,21 +224,17 @@ import PageLoader from '@/components/PageLoader.vue';
     ]),
   },
 })
-export default class ApplicationInfomation extends Vue {
-  application: Application = new Application();
+export default class ResumeInfomation extends Vue {
   auth: Authenticate;
   userId: string = '';
-
   isLoading: boolean = false;
-  isNew: boolean = false;
-
-  yearsExperience = YEARS_EXPERENCY;
-  careers = CAREERS;
+  yearsExperience = YEARS_EXPERIENCE;
   ranks = RANKS;
-  levels = LEVELS;
-  workplaces = CITIES;
-  type_works = TYPES_WORK;
-  salaries = SALARIES;
+  academicLevels = ACADEMIC_LEVELS;
+  cities = CITIES;
+  workTimes = WORK_TIMES;
+  careers = CAREERS;
+  resume: Resume = new Resume();
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
@@ -229,38 +243,19 @@ export default class ApplicationInfomation extends Vue {
   }
 
   mounted() {
-    // console.log(this.auth.uid, 'this.auth.uid')
-    // if (this.auth.uid) {
-    //   this.userId = this.auth.uid;
-    //   this.getApplicationInfo(this.auth.uid);
-    // }
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getApplicationInfo(this.auth.uid);
+    }
   }
 
   submitForm() {
-    if (this.isNew) {
-      this.createApplication();
-      return;
-    }
-    this.updateApplication();
+    this.createAndUpdateResume();
   }
 
-  createApplication() {
+  createAndUpdateResume() {
     this.isLoading = true;
-    ApplicationApi.create(this.userId, this.application.formJSONString())
-    .then((res: any) => {
-      Toast.success('Cập nhật hồ sơ thành công');
-      this.isLoading = false;
-      this.isNew = false;
-    })
-    .catch((error: any) => {
-      this.isLoading = false;
-      Toast.handleError(error);
-    });
-  }
-
-  updateApplication() {
-    this.isLoading = true;
-    ApplicationApi.update(this.userId, this.application.formJSONString())
+    ResumeApi.createAndUpdate(this.userId, this.resume.formJSONString())
     .then((res: any) => {
       Toast.success('Cập nhật hồ sơ thành công');
       this.isLoading = false;
@@ -274,16 +269,10 @@ export default class ApplicationInfomation extends Vue {
   getApplicationInfo(uid: string) {
     this.isLoading = true;
 
-    ApplicationApi.getApplication(uid)
+    ResumeApi.getResume(uid)
     .then((res: any) => {
-      console.log(res, 11)
       this.isLoading = false;
-      if (!res) {
-        this.isNew = true;
-        return;
-      }
-      this.isNew = false;
-      this.application = new Application().deserialize(res);
+      this.resume = new Resume().deserialize(res);
     })
     .catch((error: any) => {
       this.isLoading = false;

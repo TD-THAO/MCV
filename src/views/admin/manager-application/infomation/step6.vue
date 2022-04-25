@@ -21,7 +21,7 @@
         >
           <div>
             <p class="mb-0">
-              <strong>{{ item.name }}</strong>
+              <strong>{{ languagesName[item.name] }}</strong>
             </p>
             <p class="small mb-0">
               Trình độ: {{ item.level }}
@@ -77,6 +77,7 @@ import Toast from '@/shared/utils/Toast';
 import { Authenticate } from '@/shared/models/authenticate';
 import LanguageApi from '@/shared/api/Language';
 import { Language } from '@/shared/models/language';
+import { LANGUAGE_NAME } from '@/shared/enums/language';
 
 @Component({
   components: {
@@ -96,6 +97,7 @@ export default class LanguageInfomation extends Vue {
   auth: Authenticate;
   userId: string = '';
   isLoading: boolean = false;
+  languagesName = LANGUAGE_NAME;
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
@@ -136,7 +138,6 @@ export default class LanguageInfomation extends Vue {
           });
           this.languages.push(item);
         });
-        console.log(this.languages, 'languages')
       }
     })
     .catch((error: any) => {

@@ -1,16 +1,16 @@
 import BaseApi from './BaseApi';
 
 class ExperienceApi extends BaseApi {
+  getExp(userId: string) {
+    return this.getOne(`experiences/${userId}`);
+  }
+
   create(userId: string, data: any) {
     return this.postWithAutoKey(`experiences/${userId}`, data);
   }
 
   update(userId: string, expId: string, data: any) {
     return this.post(`experiences/${userId}/${expId}`, data);
-  }
-
-  getExp(userId: string) {
-    return this.getOne(`experiences/${userId}`);
   }
 
   remove(userId: any, expId: string) {

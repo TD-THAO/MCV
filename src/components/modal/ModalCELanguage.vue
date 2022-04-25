@@ -113,8 +113,6 @@ export default class ModalCELanguage extends Vue {
   }
 
   submitForm() {
-    console.log(this.language);
-
     if (this.isEdit) {
       this.updateExperience()
       return
