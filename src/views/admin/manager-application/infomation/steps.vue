@@ -51,6 +51,11 @@ export default class ManagerApplicationInfo extends Vue {
       name: 'Kỹ năng',
       icon: '5',
     },
+    {
+      path: 'step6',
+      name: 'Ngoại ngữ',
+      icon: '6',
+    },
   ];
 
    private isCurrentRoute(path: string): boolean {

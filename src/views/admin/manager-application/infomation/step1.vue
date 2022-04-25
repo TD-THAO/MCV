@@ -253,7 +253,7 @@
       </div>
     </ValidationObserver>
 
-    <PageLoader v-if="isLoading"/>
+    <!-- <PageLoader v-if="isLoading"/> -->
   </div>
 </template>
 
@@ -301,6 +301,7 @@ export default class PersonalInfomation extends Vue {
   }
 
   mounted() {
+    console.log('step1')
     if (this.auth.uid) {
       this.userId = this.auth.uid;
       this.getUserInfo(this.auth.uid);

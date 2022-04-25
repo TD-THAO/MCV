@@ -1,16 +1,16 @@
 import BaseApi from './BaseApi';
 
 class ApplicationApi extends BaseApi {
-  createWithKey(id: string, data: any) {
-    return this.post('applications', id, data);
+  create(userId: string, data: any) {
+    return this.post(`applications/${userId}`, data);
   }
 
-  update(id: string, data: any) {
-    return this.post('applications', id, data);
+  update(userId: string, data: any) {
+    return this.post(`applications/${userId}`, data);
   }
 
-  getApplicationInfo(id: string) {
-    return this.getOne('applications', id);
+  getApplication(userId: string) {
+    return this.getOne(`applications/${userId}`);
   }
 }
 

@@ -1,8 +1,8 @@
 import BaseApi from './BaseApi';
 
 class CategoryApi extends BaseApi {
-  getCategory(id: string) {
-    return this.getOne('categories', id);
+  getCategory(userId: string) {
+    return this.getOne(`categories/${userId}`);
   }
 
   getCategories(params?: any) {
@@ -13,12 +13,12 @@ class CategoryApi extends BaseApi {
     return this.postWithAutoKey('categories', data);
   }
 
-  update(id: any, data: any) {
-    return this.post('categories', id, data);
+  update(userId: any, data: any) {
+    return this.post(`categories/${userId}`, data);
   }
 
-  remove(id: any, data: any) {
-    return this.delete('categories', id, data);
+  remove(userId: any, data: any) {
+    return this.delete(`categories/${userId}`, data);
   }
 }
 

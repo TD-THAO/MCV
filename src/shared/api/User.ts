@@ -1,16 +1,16 @@
 import BaseApi from './BaseApi';
 
 class UserApi extends BaseApi {
-  createWithKey(id: string, data: any) {
-    return this.post('users', id, data);
+  create(userId: string, data: any) {
+    return this.post(`users/${userId}`, data);
   }
 
-  update(id: string, data: any) {
-    return this.post('users', id, data);
+  update(userId: string, data: any) {
+    return this.post(`users/${userId}`, data);
   }
 
-  getUserInfo(id: string) {
-    return this.getOne('users', id);
+  getUserInfo(userId: string) {
+    return this.getOne(`users/${userId}`);
   }
 }
 

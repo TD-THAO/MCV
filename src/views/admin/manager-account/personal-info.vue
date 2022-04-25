@@ -1,9 +1,9 @@
 <template>
   <div class="bg-white px-4 py-3 c-card text-left mx-3">
     <div class="admin-ctn__title">
-      <h5 class="font-weight-bold mb-3">Cập nhật thông tin cá nhân</h5>
+      <h5 class="font-weight-bold mb-3">Cập nhật thông tin tài khoản</h5>
     </div>
-    <ValidationObserver ref="personalInfoForm" tag="form" v-slot="{ invalid }">
+    <ValidationObserver ref="personalInfoForm" tag="form">
       <div class="c-form">
         <div class="row">
           <div class="col-12 col-xl-6">
@@ -243,7 +243,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              :disabled="invalid"
+
               @click="updateInfo"
             >
               Cập nhật
@@ -253,7 +253,7 @@
       </div>
     </ValidationObserver>
 
-    <PageLoader v-if="isLoading"/>
+    <!-- <PageLoader v-if="isLoading"/> -->
   </div>
 </template>
 
@@ -291,7 +291,7 @@ export default class PersonalInfomation extends Vue {
   districts: string[] = DISTRICT;
   user: User = new User();
   auth: Authenticate;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   userId: string = '';
 
   @Watch('auth')

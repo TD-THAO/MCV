@@ -29,15 +29,15 @@ abstract class BaseApi {
     });
   }
 
-  getOne(refName: string, id: any, data?: any) {
-    const ref = firebase.database().ref(`${refName}/${id}`);
+  getOne(refName: string, data?: any) {
+    const ref = firebase.database().ref(refName);
     return ref.once('value').then((snapshot) => {
       return snapshot.val();
     });
   }
 
-  post(refName: string, id: any, data?: any) {
-    const ref = firebase.database().ref(`${refName}/${id}`);
+  post(refName: string, data?: any) {
+    const ref = firebase.database().ref(refName);
     return ref.set(data);
   }
 
@@ -46,8 +46,8 @@ abstract class BaseApi {
     return ref.push().set(data);
   }
 
-  delete(refName: string, id: any, data?: any) {
-    const ref = firebase.database().ref(`${refName}/${id}`);
+  delete(refName: string, data?: any) {
+    const ref = firebase.database().ref(refName);
     return ref.set(null);
   }
 }

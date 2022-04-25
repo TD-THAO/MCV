@@ -170,7 +170,7 @@
       </div>
     </ValidationObserver>
 
-    <PageLoader v-if="isLoading"/>
+    <!-- <PageLoader v-if="isLoading"/> -->
   </div>
 </template>
 
@@ -229,10 +229,11 @@ export default class ApplicationInfomation extends Vue {
   }
 
   mounted() {
-    if (this.auth.uid) {
-      this.userId = this.auth.uid;
-      this.getApplicationInfo(this.auth.uid);
-    }
+    // console.log(this.auth.uid, 'this.auth.uid')
+    // if (this.auth.uid) {
+    //   this.userId = this.auth.uid;
+    //   this.getApplicationInfo(this.auth.uid);
+    // }
   }
 
   submitForm() {
@@ -245,7 +246,7 @@ export default class ApplicationInfomation extends Vue {
 
   createApplication() {
     this.isLoading = true;
-    ApplicationApi.createWithKey(this.userId, this.application.formJSONString())
+    ApplicationApi.create(this.userId, this.application.formJSONString())
     .then((res: any) => {
       Toast.success('Cập nhật hồ sơ thành công');
       this.isLoading = false;
@@ -273,8 +274,9 @@ export default class ApplicationInfomation extends Vue {
   getApplicationInfo(uid: string) {
     this.isLoading = true;
 
-    ApplicationApi.getApplicationInfo(uid)
+    ApplicationApi.getApplication(uid)
     .then((res: any) => {
+      console.log(res, 11)
       this.isLoading = false;
       if (!res) {
         this.isNew = true;

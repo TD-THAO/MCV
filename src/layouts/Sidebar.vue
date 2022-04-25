@@ -31,7 +31,7 @@ import firebase from 'firebase';
 export default class Sidebar extends Vue {
   sidebarMenus = [
     {
-      name: 'Cập nhật thông tin hồ sơ',
+      name: 'Quản lý hồ sơ',
       icon: 'fa fa-address-card',
       path: '/admin/complete-profile',
     },
@@ -41,7 +41,7 @@ export default class Sidebar extends Vue {
       path: '/admin/templates',
     },
     {
-      name: 'Cập nhật thông tin cá nhân',
+      name: 'Quản lý tài khoản',
       icon: 'fa fa-user',
       path: '/admin',
     },

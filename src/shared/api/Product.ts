@@ -1,8 +1,8 @@
 import BaseApi from './BaseApi';
 
 class ProductApi extends BaseApi {
-  getProduct(id: string) {
-    return this.getOne('products', id);
+  getProduct(userId: string) {
+    return this.getOne(`products/${userId}`);
   }
 
   getProducts(params?: any) {
@@ -13,12 +13,12 @@ class ProductApi extends BaseApi {
     return this.postWithAutoKey('products', data);
   }
 
-  update(id: any, data: any) {
-    return this.post('products', id, data);
+  update(userId: any, data: any) {
+    return this.post(`products/${userId}`, data);
   }
 
-  remove(id: any, data: any) {
-    return this.delete('products', id, data);
+  remove(userId: any, data: any) {
+    return this.delete(`products/${userId}`, data);
   }
 }
 
