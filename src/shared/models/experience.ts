@@ -1,6 +1,7 @@
 import { Deserializable } from '@/shared/interfaces/deserialize';
 
 export interface ExperienceInput {
+  id: string;
   name_job: string;
   company: string;
   start_at_month: number | string;
@@ -10,6 +11,7 @@ export interface ExperienceInput {
 }
 
 export class Experience implements Deserializable<Experience>, ExperienceInput {
+  id: string;
   name_job: string;
   company: string;
   start_at_month: number | string = '';
@@ -17,10 +19,15 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
   start_at_year: number | string = '';
   end_at_year: number | string = '';
 
-  constructor() {
-    this.deserialize({
+  get start_at() {
+    return `${this.start_at_month}/${this.start_at_year}`;
+  }
 
-    });
+  get end_at() {
+    return `${this.end_at_month}/${this.end_at_year}`;
+  }
+  constructor() {
+    // this.deserialize({});
   }
 
   deserialize(input: Partial<ExperienceInput>): Experience {

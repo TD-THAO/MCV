@@ -4,7 +4,7 @@
       <button
         type="button"
         class="btn btn-primary"
-        @click="openModalCEExperience()"
+        @click="openModalCELanguage()"
       >
         <i class="fa fa-plus"></i>
       </button>
@@ -12,27 +12,26 @@
 
     <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
       <div class="admin-ctn__title border-bottom">
-        <h5 class="font-weight-bold mb-3">Kinh nghiệm làm việc</h5>
+        <h5 class="font-weight-bold mb-3">Ngoại ngữ</h5>
       </div>
 
       <div class="c-table">
-        <div v-for="item in experiences" :key="item.id"
+        <div v-for="item in languages" :key="item.id"
           class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
         >
           <div>
             <p class="mb-0">
-              <strong>{{ item.name_job }}</strong> -
-              <span class="text-black-50">{{ item.company }}</span>
+              <strong>{{ languagesName[item.name] }}</strong>
             </p>
             <p class="small mb-0">
-              Từ tháng {{ item.start_at }} đến  {{ item.end_at }}
+              Trình độ: {{ item.level }}
             </p>
           </div>
           <div>
             <button
               type="button"
               class="btn btn-outline-secondary border-0"
-              @click="openModalCEExperience(item)"
+              @click="openModalCELanguage(item)"
             >
               <i class="fa fa-pencil-square-o"></i>
             </button>
@@ -46,15 +45,15 @@
             </button>
           </div>
         </div>
-        <p v-if="!experiences.length"
+        <p v-if="!languages.length"
           class="text-black-50 text-center p-3 mb-0"
         >
           Không có dữ liệu
         </p>
       </div>
 
-      <ModalCEExperience
-        name="modalCEExperience"
+      <ModalCELanguage
+        name="modalCELanguage"
         @submit="submitModalCE"
       />
 
@@ -68,23 +67,23 @@
 </template>
 
 <script lang='ts'>
+import { mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import { mapState } from 'vuex';
 
-import ModalCEExperience from '@/components/modal/ModalCEExperience.vue';
+import ModalCELanguage from '@/components/modal/ModalCELanguage.vue';
 import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
 import Toast from '@/shared/utils/Toast';
-import ExperienceApi from '@/shared/api/Experience';
-
-import { Experience } from '@/shared/models/experience';
 import { Authenticate } from '@/shared/models/authenticate';
+import LanguageApi from '@/shared/api/Language';
+import { Language } from '@/shared/models/language';
+import { LANGUAGE_NAME } from '@/shared/enums/language';
 
 @Component({
   components: {
     ValidationObserver,
     ValidationProvider,
-    ModalCEExperience,
+    ModalCELanguage,
     ModalConfirmDelete,
   },
   computed: {
@@ -93,50 +92,51 @@ import { Authenticate } from '@/shared/models/authenticate';
     ]),
   },
 })
-export default class ExperienceInfomation extends Vue {
-  experiences: Experience[] = [];
+export default class LanguageInfomation extends Vue {
+  languages: Language[] = [];
   auth: Authenticate;
   userId: string = '';
   isLoading: boolean = false;
+  languagesName = LANGUAGE_NAME;
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
     this.userId = newVal.uid;
-    this.getExpInfo(newVal.uid);
+    this.getLanguages(newVal.uid);
   }
 
   mounted() {
     if (this.auth.uid) {
       this.userId = this.auth.uid;
-      this.getExpInfo(this.userId);
+      this.getLanguages(this.userId);
     }
   }
 
-  openModalCEExperience(item = null) {
+  openModalCELanguage(item = null) {
     const params = {
       user_id: this.userId,
       item
     }
 
-    this.$modal.show('modalCEExperience', params);
+    this.$modal.show('modalCELanguage', params);
   }
 
-  openModalConfirmDelete(item: Experience) {
+  openModalConfirmDelete(item: Language) {
     this.$modal.show('modalConfirmDelete', { item });
   }
 
-  getExpInfo(uid: string) {
+  getLanguages(uid: string) {
     // this.isLoading = true;
-    this.experiences = [];
-    ExperienceApi.getExp(uid)
+    this.languages = [];
+    LanguageApi.getLanguages(uid)
     .then((res: any) => {
       if (res) {
         Object.keys(res).map((key) => {
-          const item = new Experience().deserialize({
+          const item = new Language().deserialize({
             id: key,
             ...res[key]
           });
-          this.experiences.push(item);
+          this.languages.push(item);
         });
       }
     })
@@ -147,16 +147,16 @@ export default class ExperienceInfomation extends Vue {
   }
 
   submitModalCE() {
-    this.getExpInfo(this.userId);
+    this.getLanguages(this.userId);
   }
 
   confirmDelete(item: any) {
     // this.isSubmitting = true;
-    ExperienceApi.remove(this.userId, item.id)
+    LanguageApi.remove(this.userId, item.id)
     .then((res: any) => {
       Toast.success('Xóa thành công');
       this.$modal.hide('modalConfirmDelete');
-      this.getExpInfo(this.userId);
+      this.getLanguages(this.userId);
       // this.isSubmitting = false;
     })
     .catch((error: any) => {

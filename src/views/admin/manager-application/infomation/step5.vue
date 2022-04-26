@@ -2,7 +2,7 @@
   <div class="bg-white px-4 py-3 c-card text-left mx-3">
     <div class="mb-3">
       <div class="admin-ctn__title">
-        <h5 class="font-weight-bold mb-3">Kinh nghiệm làm việc</h5>
+        <h5 class="font-weight-bold mb-3">Kỹ năng</h5>
       </div>
 
       <div class="c-form">
@@ -13,34 +13,16 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  :value="skill"
+                  :value="skill.value"
                   v-model="selectedSkills"
-                  id="defaultCheck1"
+                  :id="skill.value"
                 />
-                <label class="form-check-label" for="defaultCheck1">{{ skill }}</label>
+                <label
+                  class="form-check-label"
+                  :for="skill.value">
+                  {{ skill.label }}
+                </label>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <div class="admin-ctn__title">
-        <h5 class="font-weight-bold mb-3">Ngoại ngữ</h5>
-      </div>
-
-      <div class="c-form">
-        <div class="row">
-          <div class="col-6">
-            <div class="form-group d-flex" v-for="(item, index) in foreignLanguages" :key="index">
-              <label for="school" class="w-50">{{ item.name }}</label>
-              <select class="form-control" v-model="item.level">
-                <option value="" disabled hidden>Trình độ</option>
-                <option v-for="(level, i) in levels" :key="i">
-                  {{ level }}
-                </option>
-              </select>
             </div>
           </div>
         </div>
@@ -51,73 +33,73 @@
       <button
         type="button"
         class="btn btn-primary"
-        @click="addInfo"
+        @click="handleSubmit"
       >
-        Thêm mới
+        Lưu
       </button>
     </div>
   </div>
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator';
-import { SKILLS, LEVELS } from '@/shared/constants/skill';
+import { mapState } from 'vuex';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import Toast from '@/shared/utils/Toast';
+import SkillApi from '@/shared/api/Skill';
+import { Authenticate } from '@/shared/models/authenticate';
+import { SKILLS } from '@/shared/constants/skill';
 
 @Component({
-  components: {
-
+  computed: {
+    ...mapState('auth', [
+      'auth',
+    ]),
   },
 })
 export default class SkillInfomation extends Vue {
+  auth: Authenticate;
+  userId: string = '';
+  isLoading: boolean = false;
   skills = SKILLS;
+  selectedSkills: string[] = [];
 
-  levels = LEVELS;
-
-  foreignLanguages = [
-    {
-      name: 'Tiếng Anh',
-      level: 'Sơ cấp',
-    },
-    {
-      name: 'Tiếng Pháp',
-      level: 'Sơ cấp',
-    },
-    {
-      name: 'Tiếng Trung',
-      level: 'Sơ cấp',
-    },
-    {
-      name: 'Tiếng Nhật',
-      level: 'Sơ cấp',
-    },
-    {
-      name: 'Tiếng Hàn',
-      level: 'Sơ cấp',
-    },
-  ];
-
-  selectedLanguages: any = [];
-
-  selectedSkills = [];
+  @Watch('auth')
+  watchAuth(newVal: Authenticate, oldVal: Authenticate) {
+    this.userId = newVal.uid;
+    this.getSkill(newVal.uid);
+  }
 
   mounted() {
-    this.getSkillInfo();
+    if (this.auth.uid) {
+      this.userId = this.auth.uid;
+      this.getSkill(this.userId);
+    }
   }
 
-  addInfo() {
-    // Call api to update user info
+  handleSubmit() {
+    // this.isLoading = true;
+    SkillApi.create(this.userId, this.selectedSkills)
+    .then((res: any) => {
+      Toast.success('Thêm kỹ năng thành công');
+      // this.isLoading = false;
+    })
+    .catch((error: any) => {
+      // this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 
-  getSkillInfo() {
-    const data: any = [
-      'Kỹ năng giao tiếp',
-      'Kỹ năng làm việc theo nhóm',
-    ];
-
-    this.selectedSkills = data;
+  getSkill(userId: string) {
+    // this.isLoading = true;
+    SkillApi.getSkill(this.userId)
+    .then((res: any) => {
+      this.selectedSkills = res || [];
+      // this.isLoading = false;
+    })
+    .catch((error: any) => {
+      // this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 }
 </script>
-
-<style scoped lang='scss'>
-</style>

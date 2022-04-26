@@ -107,7 +107,7 @@ export default class Register extends Vue {
     const dataSet = new User();
     dataSet.email = auth.email;
 
-    UserApi.createWithKey(auth.uid, dataSet.formJSONString())
+    UserApi.create(auth.uid, dataSet.formJSONString())
     .then((res: any) => {
       this.isLoading = false;
       Toast.success('Đã tạo tài khoản thành công');

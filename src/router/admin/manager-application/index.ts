@@ -4,6 +4,7 @@ import ManagerApplicationInfoStep2 from '@/views/admin/manager-application/infom
 import ManagerApplicationInfoStep3 from '@/views/admin/manager-application/infomation/step3.vue';
 import ManagerApplicationInfoStep4 from '@/views/admin/manager-application/infomation/step4.vue';
 import ManagerApplicationInfoStep5 from '@/views/admin/manager-application/infomation/step5.vue';
+import ManagerApplicationInfoStep6 from '@/views/admin/manager-application/infomation/step6.vue';
 import Templates from '@/views/admin/manager-application/templates/index.vue';
 
 export default [
@@ -35,6 +36,11 @@ export default [
         path: 'step5',
         name: 'CompleteProfileStep5',
         component: ManagerApplicationInfoStep5,
+      },
+      {
+        path: 'step6',
+        name: 'CompleteProfileStep6',
+        component: ManagerApplicationInfoStep6,
       },
       {
         path: '',

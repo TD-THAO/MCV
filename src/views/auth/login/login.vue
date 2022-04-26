@@ -56,7 +56,7 @@ export default class Login extends Vue {
       this.user = new User().deserialize(res);
       this.$router.push('/admin');
     })
-    .catch((error) => {
+    .catch((error: any) => {
       this.isLoading = false;
       Toast.handleError(error);
     });

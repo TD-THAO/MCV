@@ -6,12 +6,10 @@
     :width="500"
     height="auto"
     :scrollable="true"
-    @before-open="$emit('beforeOpen', $event)"
+    @before-open="beforeOpen"
     @before-close="$emit('beforeClose', $event)"
   >
-    <div class="modal-body modal-body--custom">
-      Bạn có chắc chắn muốn xóa <strong>{{ value }}</strong> này không?
-    </div>
+    <div class="modal-body modal-body--custom text-center" v-html="content"></div>
 
     <div class="modal-footer pt-2 pb-2 justify-content-center">
       <button class="btn btn-secondary btn-mw-100"
@@ -34,21 +32,24 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
   components: {
   },
 })
-export default class ModalDelete extends Vue {
+export default class ModalConfirmDelete extends Vue {
   @Prop(String) readonly name!: string;
-  @Prop(String) readonly value!: string;
+  @Prop(String) readonly content!: string;
   @Prop({default: false}) readonly isLoading!: boolean;
+  item: any = {};
+
+  beforeOpen(event: any) {
+    if (event.params.item) {
+      this.item = event.params.item
+    }
+  }
 
   closeModal() {
     this.$modal.hide(this.name);
   }
 
   submitForm() {
-    this.$emit('submit');
+    this.$emit('submit', this.item);
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
-

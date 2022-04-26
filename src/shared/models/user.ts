@@ -15,6 +15,7 @@ export interface UserInput {
   password: string;
   new_password: string;
   confirm_new_password: string;
+  role: string;
 }
 
 export class User implements Deserializable<User>, UserInput {
@@ -29,15 +30,16 @@ export class User implements Deserializable<User>, UserInput {
   day: string = '';
   month: string = '';
   year: string = '';
+  password: string;
+  new_password: string;
+  confirm_new_password: string;
+  role: string = 'USER';
+
   get birth_day() {
     if (this.day && this.month && this.year) {
       return `${this.day}/${this.month}/${this.year}`;
     }
   }
-  password: string;
-  new_password: string;
-  confirm_new_password: string;
-
   constructor() {
     this.deserialize({
       gender: true,
@@ -67,6 +69,7 @@ export class User implements Deserializable<User>, UserInput {
       day: this.day,
       month: this.month,
       year: this.year,
+      role: this.role,
     };
 
     return data;
