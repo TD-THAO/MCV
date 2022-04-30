@@ -1,4 +1,4 @@
-import { Deserializable } from '@/shared/interfaces/deserialize';
+import { Deserializable } from '../interfaces/deserialize';
 
 export interface ResumeInput {
   position: string;
@@ -10,6 +10,7 @@ export interface ResumeInput {
   min_expected_salary: number | string;
   max_expected_salary: number | string;
   work_time: string;
+  describe: string;
 }
 
 export class Resume implements Deserializable<Resume>, ResumeInput {
@@ -22,6 +23,7 @@ export class Resume implements Deserializable<Resume>, ResumeInput {
   min_expected_salary: number | string = '';
   max_expected_salary: number | string = '';
   work_time: string = '';
+  describe: string = '';
 
   constructor() {
     this.deserialize({});
@@ -45,6 +47,7 @@ export class Resume implements Deserializable<Resume>, ResumeInput {
       rank: this.rank,
       min_expected_salary: this.min_expected_salary,
       work_time: this.work_time,
+      describe: this.describe,
     };
 
     return data;

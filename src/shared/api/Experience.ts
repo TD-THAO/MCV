@@ -1,7 +1,7 @@
 import BaseApi from './BaseApi';
 
 class ExperienceApi extends BaseApi {
-  getExp(userId: string) {
+  getExperiences(userId: string) {
     return this.getOne(`experiences/${userId}`);
   }
 

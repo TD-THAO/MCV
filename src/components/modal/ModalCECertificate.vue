@@ -152,6 +152,7 @@
 </template>
 
 <script lang="ts">
+import { cloneDeep } from 'lodash';
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import Toast from '@/shared/utils/Toast';
@@ -189,7 +190,7 @@ export default class ModalCECertificate extends Vue {
     if (event.params.item) {
       this.modalTitle = 'Sửa học vấn & bằng cấp';
       this.isEdit = true;
-      this.certificate = event.params.item;
+      this.certificate = cloneDeep(event.params.item);
     }
   }
 

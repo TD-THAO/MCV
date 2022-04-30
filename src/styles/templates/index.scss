@@ -1,0 +1,72 @@
+$temp-orange: #d48a6e;
+$temp-purple: #ad91b7;
+$temp-green: #a0b791;
+$temp-blue: #6eb0f5;
+
+.template {
+  position: relative;
+  font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  &__content {
+    width: calc(100% - 17rem);
+  }
+
+  &--orange {
+    .template__sidebar {
+      background: $temp-orange;
+    }
+
+    .text-primary {
+      color: $temp-orange !important;
+    }
+  }
+
+  &--purple {
+    .template__sidebar {
+      background: $temp-purple;
+    }
+
+    .text-primary {
+      color: $temp-purple !important;
+    }
+  }
+
+  &--green {
+    .template__sidebar {
+      background: $temp-green;
+    }
+
+    .text-primary {
+      color: $temp-green !important;
+    }
+  }
+
+  &--blue {
+    .template__sidebar {
+      background: $temp-blue;
+    }
+
+    .text-primary {
+      color: $temp-blue !important;
+    }
+  }
+
+  .nav-item {
+    text-align: left;
+    padding-left: 15px;
+  }
+}
+
+@import './template1';

@@ -1,0 +1,97 @@
+// $primary: #e9ecef;
+// .bg-primary {
+//   background: $primary;
+// }
+// $primary: #d48a6e;
+
+#sideNav {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+// #sideNav .navbar-toggler:focus {
+//   outline-color: $temp-primary;
+// }
+
+@media (min-width: 992px) {
+  #sideNav {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 17rem;
+    min-height: 100vh;
+  }
+  #sideNav .navbar-brand {
+    display: flex;
+    // margin: auto auto 0;
+    margin-top: 65%;
+    padding: 0.5rem;
+  }
+  #sideNav .navbar-brand .img-profile {
+    width: 10rem;
+    height: 10rem;
+    border: 0.5rem solid rgba(255, 255, 255, 0.2);
+    object-fit: cover;
+  }
+  #sideNav .navbar-collapse {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 0;
+    width: 100%;
+    margin-bottom: auto;
+  }
+  #sideNav .navbar-collapse .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item {
+    display: block;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
+    display: block;
+  }
+}
+
+section.resume-section {
+  // display: flex;
+  // align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  // max-width: 75rem;
+}
+section.resume-section .resume-section-content {
+  width: 100%;
+}
+
+// @media (min-width: 768px) {
+//   section.resume-section {
+//     min-height: 100vh;
+//   }
+// }
+@media (min-width: 992px) {
+  section.resume-section {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.subheading {
+  // font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  // text-transform: uppercase;
+  // font-weight: 500;
+  font-size: 14px;
+  color: #746e6e;
+}

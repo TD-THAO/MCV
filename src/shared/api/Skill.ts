@@ -1,7 +1,7 @@
 import BaseApi from './BaseApi';
 
 class SkillApi extends BaseApi {
-  getSkill(userId: string) {
+  getSkills(userId: string) {
     return this.getOne(`skills/${userId}`);
   }
 

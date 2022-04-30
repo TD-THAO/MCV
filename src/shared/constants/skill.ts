@@ -1,42 +1,46 @@
+import {
+  SKILL_NAME
+} from '../enums/skill';
+
 export const SKILLS = [
   {
-    value: 1,
-    label: 'Kỹ năng giao tiếp',
+    value: 'SKILL_1',
+    label: SKILL_NAME.SKILL_1,
   },
   {
-    value: 2,
-    label: 'Kỹ năng tổ chức',
+    value: 'SKILL_2',
+    label: SKILL_NAME.SKILL_2,
   },
   {
-    value: 3,
-    label: 'Kỹ năng lãnh đạo',
+    value: 'SKILL_3',
+    label: SKILL_NAME.SKILL_3,
   },
   {
-    value: 4,
-    label: 'Kỹ năng thuyết trình',
+    value: 'SKILL_4',
+    label: SKILL_NAME.SKILL_4,
   },
   {
-    value: 5,
-    label: 'Kỹ năng làm việc theo nhóm',
+    value: 'SKILL_5',
+    label: SKILL_NAME.SKILL_5,
   },
   {
-    value: 6,
-    label: 'Lập kế hoạch',
+    value: 'SKILL_6',
+    label: SKILL_NAME.SKILL_6,
   },
   {
-    value: 7,
-    label: 'Giải quyết vấn đề',
+    value: 'SKILL_7',
+    label: SKILL_NAME.SKILL_7,
   },
   {
-    value: 8,
-    label: 'Tư duy sáng tạo',
+    value: 'SKILL_8',
+    label: SKILL_NAME.SKILL_8,
   },
   {
-    value: 9,
-    label: 'Dễ thích nghi với môi trường mới',
+    value: 'SKILL_9',
+    label: SKILL_NAME.SKILL_9,
   },
   {
-    value: 10,
-    label: 'Quản lí thời gian hiệu quả',
+    value: 'SKILL_10',
+    label: SKILL_NAME.SKILL_10,
   },
 ];

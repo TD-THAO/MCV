@@ -38,6 +38,8 @@
         Lưu
       </button>
     </div>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -48,8 +50,12 @@ import Toast from '@/shared/utils/Toast';
 import SkillApi from '@/shared/api/Skill';
 import { Authenticate } from '@/shared/models/authenticate';
 import { SKILLS } from '@/shared/constants/skill';
+import PageLoader from '@/components/PageLoader.vue';
 
 @Component({
+  components: {
+    PageLoader,
+  },
   computed: {
     ...mapState('auth', [
       'auth',
@@ -66,38 +72,38 @@ export default class SkillInfomation extends Vue {
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
     this.userId = newVal.uid;
-    this.getSkill(newVal.uid);
+    this.getSkills(newVal.uid);
   }
 
   mounted() {
     if (this.auth.uid) {
       this.userId = this.auth.uid;
-      this.getSkill(this.userId);
+      this.getSkills(this.userId);
     }
   }
 
   handleSubmit() {
-    // this.isLoading = true;
+    this.isLoading = true;
     SkillApi.create(this.userId, this.selectedSkills)
     .then((res: any) => {
       Toast.success('Thêm kỹ năng thành công');
-      // this.isLoading = false;
+      this.isLoading = false;
     })
     .catch((error: any) => {
-      // this.isLoading = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }
 
-  getSkill(userId: string) {
-    // this.isLoading = true;
-    SkillApi.getSkill(this.userId)
+  getSkills(userId: string) {
+    this.isLoading = true;
+    SkillApi.getSkills(this.userId)
     .then((res: any) => {
       this.selectedSkills = res || [];
-      // this.isLoading = false;
+      this.isLoading = false;
     })
     .catch((error: any) => {
-      // this.isLoading = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }

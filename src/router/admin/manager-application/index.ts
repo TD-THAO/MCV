@@ -6,6 +6,7 @@ import ManagerApplicationInfoStep4 from '@/views/admin/manager-application/infom
 import ManagerApplicationInfoStep5 from '@/views/admin/manager-application/infomation/step5.vue';
 import ManagerApplicationInfoStep6 from '@/views/admin/manager-application/infomation/step6.vue';
 import Templates from '@/views/admin/manager-application/templates/index.vue';
+import DetailTemplate from '@/views/admin/manager-application/templates/detail-template.vue';
 
 export default [
   {
@@ -52,5 +53,10 @@ export default [
     path: 'templates',
     name: 'templates',
     component: Templates,
+  },
+  {
+    path: 'templates/:id',
+    name: 'DetailTemplate',
+    component: DetailTemplate,
   },
 ];
