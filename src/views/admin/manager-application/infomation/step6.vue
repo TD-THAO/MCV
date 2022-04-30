@@ -63,6 +63,8 @@
         @submit="confirmDelete"
       />
     </div>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -73,6 +75,8 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 
 import ModalCELanguage from '@/components/modal/ModalCELanguage.vue';
 import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
+import PageLoader from '@/components/PageLoader.vue';
+
 import Toast from '@/shared/utils/Toast';
 import { Authenticate } from '@/shared/models/authenticate';
 import LanguageApi from '@/shared/api/Language';
@@ -85,6 +89,7 @@ import { LANGUAGE_NAME } from '@/shared/enums/language';
     ValidationProvider,
     ModalCELanguage,
     ModalConfirmDelete,
+    PageLoader,
   },
   computed: {
     ...mapState('auth', [
@@ -126,10 +131,11 @@ export default class LanguageInfomation extends Vue {
   }
 
   getLanguages(uid: string) {
-    // this.isLoading = true;
+    this.isLoading = true;
     this.languages = [];
     LanguageApi.getLanguages(uid)
     .then((res: any) => {
+      this.isLoading = false;
       if (res) {
         Object.keys(res).map((key) => {
           const item = new Language().deserialize({
@@ -141,7 +147,7 @@ export default class LanguageInfomation extends Vue {
       }
     })
     .catch((error: any) => {
-      // this.isLoading = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }
@@ -151,16 +157,16 @@ export default class LanguageInfomation extends Vue {
   }
 
   confirmDelete(item: any) {
-    // this.isSubmitting = true;
+    this.isLoading = true;
     LanguageApi.remove(this.userId, item.id)
     .then((res: any) => {
       Toast.success('Xóa thành công');
       this.$modal.hide('modalConfirmDelete');
       this.getLanguages(this.userId);
-      // this.isSubmitting = false;
+      this.isLoading = false;
     })
     .catch((error: any) => {
-      // this.isSubmitting = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }

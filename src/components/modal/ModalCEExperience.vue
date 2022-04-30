@@ -105,6 +105,26 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label for="company">Mô tả công việc <span class="icon-required">*</span></label>
+
+                <ValidationProvider
+                  name="company"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <textarea class="form-control"
+                    placeholder="Vui lòng nhập mô tả"
+                    v-model="experience.describe"
+                  >
+                  </textarea>
+
+                  <div class="invalid-error__mess">{{ errors[0] }}</div>
+                </ValidationProvider>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -128,6 +148,7 @@
 </template>
 
 <script lang="ts">
+import { cloneDeep } from 'lodash';
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Experience } from '@/shared/models/experience';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
@@ -163,7 +184,7 @@ export default class ModalCEEXperience extends Vue {
     if (event.params.item) {
       this.modalTitle = 'Sửa kinh nghiệm làm việc';
       this.isEdit = true
-      this.experience = event.params.item
+      this.experience = cloneDeep(event.params.item)
     }
   }
 

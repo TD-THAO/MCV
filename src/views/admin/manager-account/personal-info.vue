@@ -253,7 +253,7 @@
       </div>
     </ValidationObserver>
 
-    <!-- <PageLoader v-if="isLoading"/> -->
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 

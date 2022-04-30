@@ -1,4 +1,4 @@
-import { Deserializable } from '@/shared/interfaces/deserialize';
+import { Deserializable } from '../interfaces/deserialize';
 import { LANGUAGE_NAME } from '../enums/language';
 
 export interface LanguageInput {

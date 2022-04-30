@@ -1,4 +1,4 @@
-import { Deserializable } from '@/shared/interfaces/deserialize';
+import { Deserializable } from '../interfaces/deserialize';
 
 export interface CertificateInput {
   id: string;

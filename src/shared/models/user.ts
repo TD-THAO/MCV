@@ -35,10 +35,18 @@ export class User implements Deserializable<User>, UserInput {
   confirm_new_password: string;
   role: string = 'USER';
 
-  get birth_day() {
+  get birthdayString() {
     if (this.day && this.month && this.year) {
       return `${this.day}/${this.month}/${this.year}`;
     }
+  }
+
+  get genderString() {
+    return this.gender ? 'Nữ' : 'Nam';
+  }
+
+  get addressString() {
+    return `${this.address} · ${this.district} · ${this.city}`;
   }
   constructor() {
     this.deserialize({

@@ -176,6 +176,26 @@
             </div>
           </div>
 
+          <div class="col-12">
+            <div class="form-group">
+              <label for="company">Mục tiêu nghề nghiệp <span class="icon-required">*</span></label>
+
+              <ValidationProvider
+                name="company"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <textarea class="form-control"
+                  placeholder="Vui lòng nhập mô tả"
+                  v-model="resume.describe"
+                >
+                </textarea>
+
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+          </div>
+
           <div class="col-12 text-right">
             <button
               type="button"
@@ -190,7 +210,7 @@
       </div>
     </ValidationObserver>
 
-    <!-- <PageLoader v-if="isLoading"/> -->
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 

@@ -64,6 +64,8 @@
         @submit="confirmDelete"
       />
     </div>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -74,6 +76,8 @@ import { mapState } from 'vuex';
 
 import ModalCECertificate from '@/components/modal/ModalCECertificate.vue';
 import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
+import PageLoader from '@/components/PageLoader.vue';
+
 import Toast from '@/shared/utils/Toast';
 import CertificateApi from '@/shared/api/Certificate';
 
@@ -86,6 +90,7 @@ import { Authenticate } from '@/shared/models/authenticate';
     ValidationProvider,
     ModalCECertificate,
     ModalConfirmDelete,
+    PageLoader,
   },
   computed: {
     ...mapState('auth', [
@@ -126,10 +131,11 @@ export default class CertificateInfomation extends Vue {
   }
 
   getCertificate(uid: string) {
-    // this.isLoading = true;
+    this.isLoading = true;
     this.certificates = [];
     CertificateApi.getCertificate(uid)
     .then((res: any) => {
+      this.isLoading = false;
       if (res) {
         Object.keys(res).map((key) => {
           const item = new Certificate().deserialize({
@@ -141,7 +147,7 @@ export default class CertificateInfomation extends Vue {
       }
     })
     .catch((error: any) => {
-      // this.isLoading = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }
@@ -151,16 +157,16 @@ export default class CertificateInfomation extends Vue {
   }
 
   confirmDelete(item: any) {
-    // this.isSubmitting = true;
+    this.isLoading = true;
     CertificateApi.remove(this.userId, item.id)
     .then((res: any) => {
       Toast.success('Xóa thành công');
       this.$modal.hide('modalConfirmDelete');
       this.getCertificate(this.userId);
-      // this.isSubmitting = false;
+      this.isLoading = false;
     })
     .catch((error: any) => {
-      // this.isSubmitting = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }

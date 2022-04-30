@@ -235,10 +235,6 @@
             </div>
           </div>
 
-          <div class="col-12">
-
-          </div>
-
           <div class="col-12 text-right">
             <button
               type="button"
@@ -253,18 +249,18 @@
       </div>
     </ValidationObserver>
 
-    <!-- <PageLoader v-if="isLoading"/> -->
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
 <script lang='ts'>
+import { mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import range from 'lodash/range';
 import { User } from '@/shared/models/user';
 import { DAY, MONTH, YEAR } from '@/shared/constants/date';
 import { CITIES, DISTRICT } from '@/shared/constants/address';
-import { mapActions, mapGetters, mapState } from 'vuex';
 import { Authenticate } from '@/shared/models/authenticate';
 import UserApi from '@/shared/api/User';
 import Toast from '@/shared/utils/Toast';
@@ -276,11 +272,11 @@ import PageLoader from '@/components/PageLoader.vue';
     ValidationProvider,
     PageLoader,
   },
-   computed: {
+  computed: {
     ...mapState('auth', [
       'auth',
     ]),
-   },
+  },
 })
 export default class PersonalInfomation extends Vue {
   days: number[] = DAY;
@@ -290,7 +286,7 @@ export default class PersonalInfomation extends Vue {
   districts: string[] = DISTRICT;
   user: User = new User();
   auth: Authenticate;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   userId: string = '';
 
   @Watch('auth')

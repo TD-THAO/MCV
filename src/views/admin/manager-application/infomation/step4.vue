@@ -64,6 +64,8 @@
         @submit="confirmDelete"
       />
     </div>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -74,6 +76,8 @@ import { mapState } from 'vuex';
 
 import ModalCEExperience from '@/components/modal/ModalCEExperience.vue';
 import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
+import PageLoader from '@/components/PageLoader.vue';
+
 import Toast from '@/shared/utils/Toast';
 import ExperienceApi from '@/shared/api/Experience';
 
@@ -86,6 +90,7 @@ import { Authenticate } from '@/shared/models/authenticate';
     ValidationProvider,
     ModalCEExperience,
     ModalConfirmDelete,
+    PageLoader,
   },
   computed: {
     ...mapState('auth', [
@@ -126,10 +131,11 @@ export default class ExperienceInfomation extends Vue {
   }
 
   getExpInfo(uid: string) {
-    // this.isLoading = true;
+    this.isLoading = true;
     this.experiences = [];
-    ExperienceApi.getExp(uid)
+    ExperienceApi.getExperiences(uid)
     .then((res: any) => {
+      this.isLoading = false;
       if (res) {
         Object.keys(res).map((key) => {
           const item = new Experience().deserialize({
@@ -141,7 +147,7 @@ export default class ExperienceInfomation extends Vue {
       }
     })
     .catch((error: any) => {
-      // this.isLoading = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }
@@ -151,16 +157,16 @@ export default class ExperienceInfomation extends Vue {
   }
 
   confirmDelete(item: any) {
-    // this.isSubmitting = true;
+    this.isLoading = true;
     ExperienceApi.remove(this.userId, item.id)
     .then((res: any) => {
       Toast.success('Xóa thành công');
       this.$modal.hide('modalConfirmDelete');
       this.getExpInfo(this.userId);
-      // this.isSubmitting = false;
+      this.isLoading = false;
     })
     .catch((error: any) => {
-      // this.isSubmitting = false;
+      this.isLoading = false;
       Toast.handleError(error);
     });
   }

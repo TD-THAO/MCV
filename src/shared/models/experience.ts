@@ -8,6 +8,7 @@ export interface ExperienceInput {
   end_at_month: number | string;
   start_at_year: number | string;
   end_at_year: number | string;
+  describe: string;
 }
 
 export class Experience implements Deserializable<Experience>, ExperienceInput {
@@ -18,6 +19,7 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
   end_at_month: number | string = '';
   start_at_year: number | string = '';
   end_at_year: number | string = '';
+  describe: string = '';
 
   get start_at() {
     return `${this.start_at_month}/${this.start_at_year}`;
@@ -26,6 +28,7 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
   get end_at() {
     return `${this.end_at_month}/${this.end_at_year}`;
   }
+
   constructor() {
     // this.deserialize({});
   }
@@ -46,6 +49,7 @@ export class Experience implements Deserializable<Experience>, ExperienceInput {
       end_at_month: this.end_at_month,
       start_at_year: this.start_at_year,
       end_at_year: this.end_at_year,
+      describe: this.describe,
     };
 
     return data;
