@@ -55,10 +55,11 @@
 
       <ModalCEExperience
         name="modalCEExperience"
+        textBtnConfirm="Xóa"
         @submit="submitModalCE"
       />
 
-      <ModalConfirmDelete
+      <ModalConfirm
         name="modalConfirmDelete"
         content="Bạn có chắc chắn muốn xóa không?"
         @submit="confirmDelete"
@@ -75,7 +76,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import { mapState } from 'vuex';
 
 import ModalCEExperience from '@/components/modal/ModalCEExperience.vue';
-import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
+import ModalConfirm from '@/components/modal/ModalConfirm.vue';
 import PageLoader from '@/components/PageLoader.vue';
 
 import Toast from '@/shared/utils/Toast';
@@ -89,7 +90,7 @@ import { Authenticate } from '@/shared/models/authenticate';
     ValidationObserver,
     ValidationProvider,
     ModalCEExperience,
-    ModalConfirmDelete,
+    ModalConfirm,
     PageLoader,
   },
   computed: {

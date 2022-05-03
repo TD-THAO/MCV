@@ -45,11 +45,11 @@ export default class Sidebar extends Vue {
       icon: 'fa fa-user',
       path: '/admin',
     },
-    {
-      name: 'Đổi mật khẩu',
-      icon: 'fa fa-th',
-      path: '/admin/change-password',
-    },
+    // {
+    //   name: 'Đổi mật khẩu',
+    //   icon: 'fa fa-th',
+    //   path: '/admin/change-password',
+    // },
   ];
 
   activeRoute(item: any) {
