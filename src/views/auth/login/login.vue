@@ -23,13 +23,21 @@
         <button type="button" class="btn btn-gradient btn-gradient--galaxy w-100 rounded-pill mt-4" @click="login">Đăng nhập</button>
       </form>
 
-      <p class="auth-form__footer mt-5 mb-0">
-        Bạn chưa có tài khoản?
+      <div class="auth-form__footer mt-5">
+        <p>
+          Bạn chưa có tài khoản?
+          <router-link
+            to="/register">
+            Đăng ký
+          </router-link>
+        </p>
+
         <router-link
-          to="/register">
-          Đăng ký
+          class="text-muted"
+          to="/forgot-password">
+          Quên mật khẩu?
         </router-link>
-      </p>
+      </div>
     </div>
   </div>
 </template>

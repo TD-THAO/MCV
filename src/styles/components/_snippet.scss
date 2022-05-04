@@ -1,0 +1,31 @@
+$success: #87bd48;
+
+.snippet {
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &-icon {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 28px;
+  }
+}

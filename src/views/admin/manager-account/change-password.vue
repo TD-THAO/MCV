@@ -71,6 +71,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import { User } from '@/shared/models/user';
+import firebase from 'firebase';
 
 @Component({
   components: {
@@ -80,9 +81,13 @@ import { User } from '@/shared/models/user';
 })
 export default class ChangePassword extends Vue {
   user: User = new User();
-
+  mounted() {
+    // console.log(firebase.auth().createUserWithEmailAndPassword('hieu@gmail.com', '123'))
+    // console.log(firebase.auth().sendPasswordResetEmail('trandathao29@gmail.com'))
+  }
   changePassword() {
     // Call api to change password
+    firebase.auth().sendPasswordResetEmail('hieu@yopmail.com')
   }
 }
 </script>

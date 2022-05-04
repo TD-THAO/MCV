@@ -57,9 +57,10 @@
         @submit="submitModalCE"
       />
 
-      <ModalConfirmDelete
+      <ModalConfirm
         name="modalConfirmDelete"
         content="Bạn có chắc chắn muốn xóa không?"
+        textBtnConfirm="Xóa"
         @submit="confirmDelete"
       />
     </div>
@@ -74,7 +75,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 
 import ModalCELanguage from '@/components/modal/ModalCELanguage.vue';
-import ModalConfirmDelete from '@/components/modal/ModalConfirmDelete.vue';
+import ModalConfirm from '@/components/modal/ModalConfirm.vue';
 import PageLoader from '@/components/PageLoader.vue';
 
 import Toast from '@/shared/utils/Toast';
@@ -88,7 +89,7 @@ import { LANGUAGE_NAME } from '@/shared/enums/language';
     ValidationObserver,
     ValidationProvider,
     ModalCELanguage,
-    ModalConfirmDelete,
+    ModalConfirm,
     PageLoader,
   },
   computed: {

@@ -17,10 +17,10 @@
         @click="closeModal">
         Hủy
       </button>
-      <button class="btn btn-danger btn-mw-100"
+      <button class="btn btn-primary btn-mw-100"
         :disabled="isLoading"
         @click="submitForm">
-        Xóa
+        {{ textBtnConfirm }}
       </button>
     </div>
   </modal>
@@ -32,9 +32,10 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
   components: {
   },
 })
-export default class ModalConfirmDelete extends Vue {
+export default class ModalConfirm extends Vue {
   @Prop(String) readonly name!: string;
   @Prop(String) readonly content!: string;
+  @Prop({default: 'Đồng ý'}) readonly textBtnConfirm!: string;
   @Prop({default: false}) readonly isLoading!: boolean;
   item: any = {};
 

@@ -1,8 +1,8 @@
 <template>
  <div class="auth">
-    <div class="auth-form">
+    <div class="auth-form" >
       <form v-if="!isSuccess">
-        <h1 class="mb-5">Đăng ký</h1>
+        <h1 class="mb-5">Quên mật khẩu</h1>
         <!-- <div class="form-group">
           <label class="font-weight-bold" for="">Họ và tên</label>
           <input type="text"
@@ -34,31 +34,12 @@
           />
         </div>
 
-        <div class="form-group">
-          <label class="font-weight-bold" for="">Mật khẩu</label>
-          <input type="password"
-            class="form-control"
-            id="exampleInputPassword"
-            placeholder=" Vui lòng nhập mật khẩu"
-            v-model="auth.password"
-          />
-        </div>
-
-        <!-- <div class="form-group">
-          <label class="font-weight-bold" for="">Nhập lại mật khẩu</label>
-          <input type="password"
-            class="form-control"
-            id="exampleInputConfirmPassword"
-            placeholder="Vui lòng nhập lại mật khẩu"
-          />
-        </div> -->
-
         <button
           type="button"
           class="btn btn-gradient btn-gradient--galaxy w-100 rounded-pill mt-4"
-          @click="register"
+          @click="sendEmailForgotPassword"
           :disabled="isLoading">
-          Đăng ký
+          Gửi
         </button>
       </form>
 
@@ -67,7 +48,8 @@
           <i class="fa fa-check"></i>
         </span>
         <h2 class="mt-4">Thành công!</h2>
-        <p>Đã đăng kí tài khoản thành công</p>
+        <p>Đã gửi email xác nhận đặt lại mật khẩu thành công, vui lòng kiểm tra email</p>
+
         <button type="button"
           class="btn btn-gradient btn-gradient--galaxy w-100 rounded-pill mt-4"
           @click="handleRedirect">
@@ -76,7 +58,7 @@
       </div>
 
       <!-- <p class="auth-form__footer mt-5 mb-0">
-        Bạn đã có tài khoản?
+        Quay lại
         <router-link
           to="/login">
           Đăng nhập
@@ -98,18 +80,19 @@ import UserApi from '@/shared/api/User';
 @Component({
   components: {},
 })
-export default class Register extends Vue {
+export default class ForgotPassword extends Vue {
   auth: Authenticate = new Authenticate();
   database = firebase.database();
   isLoading: boolean = false;
   isSuccess: boolean = false;
 
-  register() {
+  sendEmailForgotPassword() {
     this.isLoading = true;
 
-    firebase.auth().createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+    firebase.auth().sendPasswordResetEmail(this.auth.email)
     .then((res: any) => {
-      this.createUserInfor(res.user);
+      this.isSuccess = true;
+      Toast.success('Đã gửi thành công');
     })
     .catch((error) => {
       this.isLoading = false;
@@ -117,20 +100,41 @@ export default class Register extends Vue {
     });
   }
 
-  private createUserInfor(auth: Authenticate) {
-    const dataSet = new User();
-    dataSet.email = auth.email;
-
-    UserApi.create(auth.uid, dataSet.formJSONString())
-    .then((res: any) => {
-      this.isLoading = false;
-      this.isSuccess = true;
-      Toast.success('Đã tạo tài khoản thành công');
-    })
-    .catch((error: any) => {
-      this.isLoading = false;
-      Toast.handleError(error);
-    });
+  handleRedirect() {
+    this.$router.push('/login');
   }
 }
 </script>
+<style scoped lang="scss">
+$success: #87bd48;
+
+.snippet {
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &--success {
+    .snippet-icon {
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  &-icon {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 28px;
+  }
+}
+</style>
