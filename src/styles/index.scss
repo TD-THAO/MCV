@@ -1,14 +1,8 @@
-$col-red: red;
-$col-green: green;
-
-.col-red {
-  color: $col-red;
-}
-
-.col-green {
-  color: $col-green;
-}
-// $primary: red;
+@import './variables.scss';
+@import './vendors/index.scss';
+@import './components/index.scss';
+@import './pages/index.scss';
+@import './templates/index.scss';
 
 ul li {
   list-style: none;
@@ -17,8 +11,3 @@ ul li {
 #app {
   color: #555 !important;
 }
-
-@import './vendors/index.scss';
-@import './components/index.scss';
-@import './pages/index.scss';
-@import './templates/index.scss';

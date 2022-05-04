@@ -8,6 +8,85 @@
       >
         Đổi mật khẩu
       </button>
+
+      <button
+        type="button"
+        class="btn btn-success"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-danger"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-warning"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-info"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+      >
+        2
+      </button>
+    </div>
+    <div class="col-12 text-right mt-3">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="openModalConfirm()"
+      >
+        Đổi mật khẩu
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-success"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-warning"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-info"
+      >
+        2
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+      >
+        2
+      </button>
     </div>
 
     <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
