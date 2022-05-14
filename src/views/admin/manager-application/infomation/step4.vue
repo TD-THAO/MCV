@@ -1,16 +1,73 @@
 <template>
   <div>
-    <div class="col-12 text-right">
+    <div class="col-12 text-right mb-3">
       <button
         type="button"
         class="btn btn-primary"
         @click="openModalCEExperience()"
       >
-        <i class="fa fa-plus"></i>
+        Tạo
       </button>
     </div>
+    <div class="card text-left c-card mx-3">
+      <div class="card-header">
+        <h3 class="card-title">Kinh nghiệm làm việc</h3>
+      </div>
 
-    <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
+      <div class="card-body">
+        <div class="c-table">
+          <div v-for="item in experiences" :key="item.id"
+            class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
+          >
+            <div>
+              <p class="mb-0">
+                <strong>{{ item.name_job }}</strong> -
+                <span class="text-black-50">{{ item.company }}</span>
+              </p>
+              <p class="small mb-0">
+                Từ tháng {{ item.start_at }} đến  {{ item.end_at }}
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm mr-2"
+                @click="openModalCEExperience(item)"
+              >
+                <i class="fa fa-pencil-square-o"></i>
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                @click="openModalConfirmDelete(item)"
+              >
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </div>
+          </div>
+          <p v-if="!experiences.length"
+            class="text-black-50 text-center p-3 mb-0"
+          >
+            Không có dữ liệu
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <ModalCEExperience
+      name="modalCEExperience"
+      textBtnConfirm="Xóa"
+      @submit="submitModalCE"
+    />
+
+    <ModalConfirm
+      name="modalConfirmDelete"
+      content="Bạn có chắc chắn muốn xóa không?"
+      @submit="confirmDelete"
+    />
+
+    <!-- <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
       <div class="admin-ctn__title border-bottom">
         <h5 class="font-weight-bold mb-3">Kinh nghiệm làm việc</h5>
       </div>
@@ -64,7 +121,7 @@
         content="Bạn có chắc chắn muốn xóa không?"
         @submit="confirmDelete"
       />
-    </div>
+    </div> -->
 
     <PageLoader v-if="isLoading"/>
   </div>

@@ -1,43 +1,40 @@
 <template>
-  <div class="bg-white px-4 py-3 c-card text-left mx-3">
-    <div class="mb-3">
-      <div class="admin-ctn__title">
-        <h5 class="font-weight-bold mb-3">Kỹ năng</h5>
+  <div class="card text-left c-card mx-3">
+    <ValidationObserver ref="personalInfoForm" tag="form">
+      <div class="card-header">
+        <h3 class="card-title">Kỹ năng</h3>
       </div>
-
-      <div class="c-form">
-        <div class="row">
-          <div class="col-4" v-for="(skill, index) in skills" :key="index">
-            <div class="form-group">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  :value="skill.value"
-                  v-model="selectedSkills"
-                  :id="skill.value"
-                />
-                <label
-                  class="form-check-label"
-                  :for="skill.value">
-                  {{ skill.label }}
+      <div class="card-body">
+        <div class="c-form">
+          <div class="row">
+            <div class="col-4" v-for="(skill, index) in skills" :key="index">
+              <div class="form-group">
+                <label class="c-control c-control-checkbox">{{ skill.label }}
+                  <input class="c-control-input"
+                    type="checkbox"
+                    name="gender"
+                    :value="skill.value"
+                    :id="skill.value"
+                    v-model="selectedSkills"
+                  >
+                  <span class="checkmark"></span>
                 </label>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="text-right">
-      <button
-        type="button"
-        class="btn btn-primary"
-        @click="handleSubmit"
-      >
-        Lưu
-      </button>
-    </div>
+      <div class="card-footer text-right">
+        <button
+          type="button"
+          class="btn btn-primary"
+          @click="handleSubmit"
+        >
+          Lưu
+        </button>
+      </div>
+    </ValidationObserver>
 
     <PageLoader v-if="isLoading"/>
   </div>

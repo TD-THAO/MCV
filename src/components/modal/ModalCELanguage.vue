@@ -14,14 +14,14 @@
     </div>
     <ValidationObserver ref="experienceForm" tag="form" v-slot="{ invalid }">
       <div class="modal-body modal-body--custom">
-        <div class="c-form">
+        <div class="c-form text-left">
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label>Ngoại ngữ <span class="icon-required">*</span></label>
+                <label class="c-form__label">Ngoại ngữ <span class="icon-required">*</span></label>
 
                 <select v-model="language.name"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn ngôn ngữ</option>
                   <option v-for="item in languages"
                     :key="item.value"
@@ -32,10 +32,10 @@
               </div>
 
               <div class="form-group">
-                <label>Trình độ<span class="icon-required">*</span></label>
+                <label class="c-form__label">Trình độ<span class="icon-required">*</span></label>
 
                 <select v-model="language.level"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn trình độ</option>
                   <option v-for="item in levels"
                     :key="item.value"

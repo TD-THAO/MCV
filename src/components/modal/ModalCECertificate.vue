@@ -14,9 +14,14 @@
     </div>
     <ValidationObserver ref="personalInfoForm" tag="form" v-slot="{ invalid }">
       <div class="modal-body modal-body--custom">
-        <div class="c-form">
+        <div class="c-form text-left">
           <div class="form-group">
-            <label for="title">Trình độ <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >
+              Trình độ <span class="icon-required">*</span>
+            </label>
 
             <ValidationProvider
               name="title"
@@ -25,7 +30,7 @@
             >
               <input
                 type="text"
-                class="form-control"
+                class="form-control form-control-lg"
                 id="title"
                 placeholder="Vui lòng nhập trình độ"
                 v-model="certificate.title"
@@ -36,7 +41,12 @@
           </div>
 
           <div class="form-group">
-            <label for="title">Trường, cơ sở, trung tâm, đào tạo <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >
+              Trường, cơ sở, trung tâm, đào tạo <span class="icon-required">*</span>
+            </label>
 
             <ValidationProvider
               name="school_name"
@@ -45,7 +55,7 @@
             >
               <input
                 type="text"
-                class="form-control"
+                class="form-control form-control-lg"
                 id="school_name"
                 placeholder="Vui lòng nhập trường, cơ sở, trung tâm, đào tạo"
                 v-model="certificate.school_name"
@@ -56,7 +66,11 @@
           </div>
 
           <div class="form-group">
-            <label for="title">Khoa đào tạo <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >Khoa đào tạo <span class="icon-required">*</span>
+            </label>
 
             <ValidationProvider
               name="career_name"
@@ -65,7 +79,7 @@
             >
               <input
                 type="text"
-                class="form-control"
+                class="form-control form-control-lg"
                 id="career_name"
                 placeholder="Vui lòng nhập khoa đào tạo"
                 v-model="certificate.career_name"
@@ -76,12 +90,17 @@
           </div>
 
           <div class="form-group">
-            <label for="title">Thời gian <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >
+              Thời gian <span class="icon-required">*</span>
+            </label>
 
             <div class="row">
               <div class="col-6">
                 <span>Từ</span>
-                <select class="form-control" v-model="certificate.start_at">
+                <select class="form-control form-control-lg" v-model="certificate.start_at">
                   <option value="" disabled hidden>Năm</option>
                   <option v-for="(item, index) in years" :key="index">
                     {{ item }}
@@ -90,7 +109,7 @@
               </div>
               <div class="col-6">
                 <span>đến</span>
-                <select class="form-control" v-model="certificate.end_at">
+                <select class="form-control form-control-lg" v-model="certificate.end_at">
                   <option value="" disabled hidden>Năm</option>
                   <option v-for="(item, index) in years" :key="index">
                     {{ item }}
@@ -101,7 +120,12 @@
           </div>
 
           <div class="form-group">
-            <label for="title">Chuyên ngành đào tạo <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >
+              Chuyên ngành đào tạo <span class="icon-required">*</span>
+            </label>
 
             <ValidationProvider
               name="specialized"
@@ -110,7 +134,7 @@
             >
               <input
                 type="text"
-                class="form-control"
+                class="form-control form-control-lg"
                 id="specialized"
                 placeholder="Vui lòng nhập chuyên ngành đào tạo"
                 v-model="certificate.specialized"
@@ -121,9 +145,14 @@
           </div>
 
           <div class="form-group">
-            <label for="title">Loại tốt nghiệp <span class="icon-required">*</span></label>
+            <label
+              for="title"
+              class="c-form__label"
+            >
+              Loại tốt nghiệp <span class="icon-required">*</span>
+            </label>
 
-            <select class="form-control" v-model="certificate.gra_certificate">
+            <select class="form-control form-control-lg" v-model="certificate.gra_certificate">
               <option value="" disabled hidden>Chọn loại tốt nghiệp</option>
               <option v-for="(item, index) in rates" :key="index">
                 {{ item }}
@@ -133,7 +162,7 @@
         </div>
       </div>
 
-      <div class="modal-footer pt-2 pb-2 justify-content-center">
+      <div class="modal-footer pt-2 pb-2 justify-content-center border-top-0">
         <button class="btn btn-secondary btn-mw-100"
           type="button"
           :disabled="isLoading"

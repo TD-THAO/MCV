@@ -3,19 +3,19 @@ import { LANGUAGE_NAME } from '../enums/language';
 export const LEVELS = [
   {
     label: 'Sơ cấp',
-    value: 1,
+    value: 'LEVEL_1',
   },
   {
     label: 'Trung cấp',
-    value: 2,
+    value: 'LEVEL_2',
   },
   {
     label: 'Cao cấp',
-    value: 3,
+    value: 'LEVEL_3',
   },
   {
     label: 'Bản ngữ',
-    value: 4,
+    value: 'LEVEL_4',
   },
 ]
 

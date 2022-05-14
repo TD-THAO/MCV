@@ -15,13 +15,13 @@
           Đổi mẫu
         </button>
 
-        <!-- <button
+        <button
           type="button"
           class="btn btn-primary"
-          @click="save"
+          @click="sendCV"
         >
-          Lưu
-        </button> -->
+          Gửi CV
+        </button>
       </div>
 
       <div class="CV-template">
@@ -169,6 +169,8 @@ export default class DetailTemplate extends Vue {
   changeTemplate() {
     this.$router.push(`/admin/templates`);
   }
+
+  sendCV() {}
 }
 </script>
 

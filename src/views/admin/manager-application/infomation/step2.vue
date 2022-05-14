@@ -1,14 +1,20 @@
 <template>
-  <div class="bg-white px-4 py-3 c-card text-left mx-3">
-    <div class="admin-ctn__title">
-      <h5 class="font-weight-bold mb-3">Thông tin hồ sơ</h5>
-    </div>
-    <ValidationObserver ref="personalInfoForm" tag="form" v-slot="{ invalid }">
-      <div class="c-form">
+  <div class="card text-left c-card mx-3">
+    <ValidationObserver ref="personalInfoForm" tag="form">
+      <div class="card-header">
+        <h3 class="card-title">Thông tin tổng quan</h3>
+      </div>
+      <div class="card-body">
+        <div class="c-form">
         <div class="row">
           <div class="col-6">
             <div class="form-group">
-              <label for="position">Vị trí/việc làm cần ứng tuyển<span class="icon-required">*</span></label>
+              <label
+                for="position"
+                class="c-form__label"
+              >
+                Vị trí/việc làm cần ứng tuyển<span class="icon-required">*</span>
+              </label>
 
               <ValidationProvider
                 name="position"
@@ -17,7 +23,7 @@
               >
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control form-control-lg"
                   id="position"
                   placeholder="Vui lòng nhập vị trí/ việc làm cần ứng tuyển"
                   v-model="resume.position"
@@ -28,15 +34,19 @@
             </div>
 
             <div class="form-group">
-              <label for="academic_level">Trình độ học vấn <span class="icon-required">*</span></label
+              <label
+                for="academic_level"
+                class="c-form__label"
               >
+                Trình độ học vấn <span class="icon-required">*</span>
+              </label>
               <ValidationProvider
                 name="academic_level"
                 rules="required"
                 v-slot="{ errors }"
               >
                 <select v-model="resume.academic_level"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn trình độ học vấn</option>
                   <option v-for="item in academicLevels"
                     :key="item.value"
@@ -49,7 +59,12 @@
             </div>
 
             <div class="form-group">
-              <label for="year_experience">Số năm kinh nghiệm <span class="icon-required">*</span></label
+              <label
+                for="year_experience"
+                class="c-form__label"
+              >
+                Số năm kinh nghiệm <span class="icon-required">*</span>
+              </label
               >
               <ValidationProvider
                 name="year_experience"
@@ -57,7 +72,7 @@
                 v-slot="{ errors }"
               >
                 <select v-model="resume.year_experience"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn số năm kinh nghiệm</option>
                   <option v-for="item in yearsExperience"
                     :key="item.value"
@@ -70,38 +85,21 @@
             </div>
 
             <div class="form-group">
-              <label for="rank">Cấp bậc <span class="icon-required">*</span></label
+              <label
+                for="rank"
+                class="c-form__label"
               >
+                Cấp bậc <span class="icon-required">*</span>
+              </label>
               <ValidationProvider
                 name="rank"
                 rules="required"
                 v-slot="{ errors }"
               >
                 <select v-model="resume.rank"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn cấp bậc</option>
                   <option v-for="item in ranks"
-                    :key="item.value"
-                    :value="item.value">
-                    {{ item.label }}
-                  </option>
-                </select>
-                <div class="invalid-error__mess">{{ errors[0] }}</div>
-              </ValidationProvider>
-            </div>
-
-            <div class="form-group">
-              <label for="career">Ngành nghề <span class="icon-required">*</span></label
-              >
-              <ValidationProvider
-                name="career"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <select v-model="resume.career"
-                  class="form-control" >
-                  <option value="" disabled hidden>Chọn ngành nghề</option>
-                  <option v-for="item in careers"
                     :key="item.value"
                     :value="item.value">
                     {{ item.label }}
@@ -114,7 +112,12 @@
 
           <div class="col-6">
             <div class="form-group">
-              <label for="min_expected_salary">Mức lương<span class="icon-required">*</span></label>
+              <label
+                for="min_expected_salary"
+                class="c-form__label"
+              >
+                Mức lương<span class="icon-required">*</span>
+              </label>
 
               <ValidationProvider
                 name="min_expected_salary"
@@ -123,7 +126,7 @@
               >
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control form-control-lg"
                   id="min_expected_salary"
                   placeholder="Vui lòng nhập mức lương"
                   v-model="resume.min_expected_salary"
@@ -134,15 +137,19 @@
             </div>
 
             <div class="form-group">
-              <label for="workplace">Nơi làm việc <span class="icon-required">*</span></label
+              <label
+                for="workplace"
+                class="c-form__label"
               >
+                Nơi làm việc <span class="icon-required">*</span>
+              </label>
               <ValidationProvider
                 name="workplace"
                 rules="required"
                 v-slot="{ errors }"
               >
                 <select v-model="resume.workplace"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn nơi làm việc</option>
                   <option v-for="item in cities"
                     :key="item"
@@ -155,17 +162,46 @@
             </div>
 
             <div class="form-group">
-              <label for="work_time">Hình thức làm việc <span class="icon-required">*</span></label
+              <label
+                for="work_time"
+                class="c-form__label"
               >
+                Hình thức làm việc <span class="icon-required">*</span>
+              </label>
               <ValidationProvider
                 name="work_time"
                 rules="required"
                 v-slot="{ errors }"
               >
                 <select v-model="resume.work_time"
-                  class="form-control" >
+                  class="form-control form-control-lg">
                   <option value="" disabled hidden>Chọn hình thức làm việc</option>
                   <option v-for="item in workTimes"
+                    :key="item.value"
+                    :value="item.value">
+                    {{ item.label }}
+                  </option>
+                </select>
+                <div class="invalid-error__mess">{{ errors[0] }}</div>
+              </ValidationProvider>
+            </div>
+
+            <div class="form-group">
+              <label
+                for="career"
+                class="c-form__label"
+              >
+                Ngành nghề <span class="icon-required">*</span>
+              </label>
+              <ValidationProvider
+                name="career"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <select v-model="resume.career"
+                  class="form-control form-control-lg">
+                  <option value="" disabled hidden>Chọn ngành nghề</option>
+                  <option v-for="item in careers"
                     :key="item.value"
                     :value="item.value">
                     {{ item.label }}
@@ -178,14 +214,19 @@
 
           <div class="col-12">
             <div class="form-group">
-              <label for="company">Mục tiêu nghề nghiệp <span class="icon-required">*</span></label>
+              <label
+                for="company"
+                class="c-form__label"
+              >
+                Mục tiêu nghề nghiệp <span class="icon-required">*</span>
+              </label>
 
               <ValidationProvider
                 name="company"
                 rules="required"
                 v-slot="{ errors }"
               >
-                <textarea class="form-control"
+                <textarea class="form-control form-control-lg"
                   placeholder="Vui lòng nhập mô tả"
                   v-model="resume.describe"
                 >
@@ -195,22 +236,20 @@
               </ValidationProvider>
             </div>
           </div>
-
-          <div class="col-12 text-right">
-            <button
-              type="button"
-              class="btn btn-primary"
-              :disabled="invalid"
-              @click="submitForm"
-            >
-              Lưu
-            </button>
-          </div>
         </div>
       </div>
+      </div>
+      <div class="card-footer text-right">
+        <button
+          type="button"
+          class="btn btn-primary"
+          :disabled="invalid"
+          @click="submitForm"
+        >
+          Lưu
+        </button>
+      </div>
     </ValidationObserver>
-
-    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
