@@ -1,69 +1,71 @@
 <template>
   <div>
-    <div class="col-12 text-right">
+    <div class="col-12 text-right mb-3">
       <button
         type="button"
         class="btn btn-primary"
         @click="openModalCELanguage()"
       >
-        <i class="fa fa-plus"></i>
+        Tạo
       </button>
     </div>
 
-    <div class="bg-white px-4 py-3 c-card text-left mx-3 mt-3">
-      <div class="admin-ctn__title border-bottom">
-        <h5 class="font-weight-bold mb-3">Ngoại ngữ</h5>
+    <div class="card text-left c-card mx-3">
+      <div class="card-header">
+        <h3 class="card-title">Ngoại ngữ</h3>
       </div>
 
-      <div class="c-table">
-        <div v-for="item in languages" :key="item.id"
-          class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
-        >
-          <div>
-            <p class="mb-0">
-              <strong>{{ languagesName[item.name] }}</strong>
-            </p>
-            <p class="small mb-0">
-              Trình độ: {{ item.level }}
-            </p>
-          </div>
-          <div>
-            <button
-              type="button"
-              class="btn btn-outline-secondary border-0"
-              @click="openModalCELanguage(item)"
-            >
-              <i class="fa fa-pencil-square-o"></i>
-            </button>
+      <div class="card-body">
+        <div class="c-table">
+          <div v-for="item in languages" :key="item.id"
+            class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
+          >
+            <div>
+              <p class="mb-0">
+                <strong>{{ languagesName[item.name] }}</strong>
+              </p>
+              <p class="small mb-0">
+                Trình độ: {{ languagesLevel[item.level] }}
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm mr-2"
+                @click="openModalCELanguage(item)"
+              >
+                <i class="fa fa-pencil-square-o"></i>
+              </button>
 
-            <button
-              type="button"
-              class="btn btn-outline-secondary border-0"
-              @click="openModalConfirmDelete(item)"
-            >
-              <i class="fa fa-trash-o"></i>
-            </button>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                @click="openModalConfirmDelete(item)"
+              >
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </div>
           </div>
+          <p v-if="!languages.length"
+            class="text-black-50 text-center p-3 mb-0"
+          >
+            Không có dữ liệu
+          </p>
         </div>
-        <p v-if="!languages.length"
-          class="text-black-50 text-center p-3 mb-0"
-        >
-          Không có dữ liệu
-        </p>
       </div>
-
-      <ModalCELanguage
-        name="modalCELanguage"
-        @submit="submitModalCE"
-      />
-
-      <ModalConfirm
-        name="modalConfirmDelete"
-        content="Bạn có chắc chắn muốn xóa không?"
-        textBtnConfirm="Xóa"
-        @submit="confirmDelete"
-      />
     </div>
+
+    <ModalCELanguage
+      name="modalCELanguage"
+      @submit="submitModalCE"
+    />
+
+    <ModalConfirm
+      name="modalConfirmDelete"
+      content="Bạn có chắc chắn muốn xóa không?"
+      textBtnConfirm="Xóa"
+      @submit="confirmDelete"
+    />
 
     <PageLoader v-if="isLoading"/>
   </div>
@@ -82,7 +84,7 @@ import Toast from '@/shared/utils/Toast';
 import { Authenticate } from '@/shared/models/authenticate';
 import LanguageApi from '@/shared/api/Language';
 import { Language } from '@/shared/models/language';
-import { LANGUAGE_NAME } from '@/shared/enums/language';
+import { LANGUAGE_NAME, LANGUAGE_LEVEL } from '@/shared/enums/language';
 
 @Component({
   components: {
@@ -104,6 +106,7 @@ export default class LanguageInfomation extends Vue {
   userId: string = '';
   isLoading: boolean = false;
   languagesName = LANGUAGE_NAME;
+  languagesLevel = LANGUAGE_LEVEL;
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {

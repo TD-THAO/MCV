@@ -11,18 +11,7 @@ export class Language implements Deserializable<Language>, LanguageInput {
   id: string;
   name: string = '';
   level: string = '';
-  // get nameString() {
-  //   // const typeName = typeof this.name;
-  //   // const typeLang = typeof LANGUAGE_NAME['ENGLISH'];
-  //   // const data = {
-  //   //   name: typeName,
-  //   //   language: typeLang
-  //   // }
-  //   return this.name ? LANGUAGE_NAME[this.name] : '';
-  // }
-  // nameStringF(name) {
-  //   return LANGUAGE_NAME['name'];
-  // }
+
   constructor() {
     this.deserialize({});
   }

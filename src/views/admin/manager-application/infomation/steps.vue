@@ -33,7 +33,7 @@ export default class ManagerApplicationInfo extends Vue {
     },
     {
       path: 'step2',
-      name: 'Thông tin hồ sơ',
+      name: 'Thông tin tổng quan',
       icon: '2',
     },
     {

@@ -14,11 +14,16 @@
     </div>
     <ValidationObserver ref="experienceForm" tag="form" v-slot="{ invalid }">
       <div class="modal-body modal-body--custom">
-        <div class="c-form">
+        <div class="c-form text-left">
           <div class="row">
             <div class="col-6">
               <div class="form-group">
-                <label for="name_job">Chức năng/ vị trí <span class="icon-required">*</span></label>
+                <label
+                  for="name_job"
+                  class="c-form__label"
+                >
+                  Chức năng/ vị trí <span class="icon-required">*</span>
+                </label>
 
                 <ValidationProvider
                   name="name_job"
@@ -27,7 +32,7 @@
                 >
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control form-control-lg"
                     id="name_job"
                     placeholder="Vui lòng nhập chức danh/ vị trí"
                     v-model="experience.name_job"
@@ -38,11 +43,16 @@
               </div>
 
               <div class="form-group">
-                <label for="start_at">Thời gian bắt đầu</label>
+                <label
+                  for="start_at"
+                  class="c-form__label"
+                >
+                  Thời gian bắt đầu
+                </label>
 
                 <div class="row">
                   <div class="col-6">
-                    <select class="form-control" v-model="experience.start_at_month">
+                    <select class="form-control form-control-lg" v-model="experience.start_at_month">
                       <option value="" disabled hidden>Chọn tháng</option>
                       <option v-for="item in months" :key="item">
                         {{ item }}
@@ -50,7 +60,7 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <select class="form-control" v-model="experience.start_at_year">
+                    <select class="form-control form-control-lg" v-model="experience.start_at_year">
                       <option value="" disabled hidden>Chọn năm</option>
                       <option v-for="item in years" :key="item">
                         {{ item }}
@@ -63,7 +73,12 @@
 
             <div class="col-6">
               <div class="form-group">
-                <label for="company">Công ty <span class="icon-required">*</span></label>
+                <label
+                  for="company"
+                  class="c-form__label"
+                >
+                  Công ty <span class="icon-required">*</span>
+                </label>
 
                 <ValidationProvider
                   name="company"
@@ -72,7 +87,7 @@
                 >
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control form-control-lg"
                     id="company"
                     placeholder="Vui lòng nhập công ty"
                     v-model="experience.company"
@@ -83,11 +98,16 @@
               </div>
 
               <div class="form-group">
-                <label for="end_at">Thời gian kết thúc</label>
+                <label
+                  for="end_at"
+                  class="c-form__label"
+                >
+                  Thời gian kết thúc
+                </label>
 
                 <div class="row">
                   <div class="col-6">
-                    <select class="form-control" v-model="experience.end_at_month">
+                    <select class="form-control form-control-lg" v-model="experience.end_at_month">
                       <option value="" disabled hidden>Chọn tháng</option>
                       <option v-for="item in months" :key="item">
                         {{ item }}
@@ -95,7 +115,7 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <select class="form-control" v-model="experience.end_at_year">
+                    <select class="form-control form-control-lg" v-model="experience.end_at_year">
                       <option value="" disabled hidden>Chọn năm</option>
                       <option v-for="item in years" :key="item">
                         {{ item }}
@@ -108,14 +128,19 @@
 
             <div class="col-12">
               <div class="form-group">
-                <label for="company">Mô tả công việc <span class="icon-required">*</span></label>
+                <label
+                  for="company"
+                  class="c-form__label"
+                >
+                  Mô tả công việc <span class="icon-required">*</span>
+                </label>
 
                 <ValidationProvider
                   name="company"
                   rules="required"
                   v-slot="{ errors }"
                 >
-                  <textarea class="form-control"
+                  <textarea class="form-control form-control-lg"
                     placeholder="Vui lòng nhập mô tả"
                     v-model="experience.describe"
                   >
