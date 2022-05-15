@@ -1,6 +1,7 @@
 import { Deserializable } from '@/shared/interfaces/deserialize';
 
 export interface UserInput {
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -19,6 +20,7 @@ export interface UserInput {
 }
 
 export class User implements Deserializable<User>, UserInput {
+  id: string = '';
   name: string = '';
   email: string = '';
   phone: string = '';
@@ -48,6 +50,11 @@ export class User implements Deserializable<User>, UserInput {
   get addressString() {
     return `${this.address} · ${this.district} · ${this.city}`;
   }
+
+  get isAdmin() {
+    return this.role === 'ADMIN'
+  }
+
   constructor() {
     this.deserialize({
       gender: true,
@@ -78,6 +85,7 @@ export class User implements Deserializable<User>, UserInput {
       month: this.month,
       year: this.year,
       role: this.role,
+      id: this.id,
     };
 
     return data;

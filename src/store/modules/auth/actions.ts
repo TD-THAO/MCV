@@ -1,9 +1,9 @@
 import { ActionTree } from 'vuex';
 import { AuthState } from './state';
-import { Authenticate } from '@/shared/models/authenticate';
+import { User } from '@/shared/models/user';
 
 const actions: ActionTree<AuthState, any> = {
-  setUser({commit}, payload: Authenticate) {
+  setUser({commit}, payload: User) {
     commit('setUser', payload);
   },
 };

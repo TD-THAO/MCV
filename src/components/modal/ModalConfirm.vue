@@ -37,12 +37,12 @@ export default class ModalConfirm extends Vue {
   @Prop(String) readonly content!: string;
   @Prop({default: 'Đồng ý'}) readonly textBtnConfirm!: string;
   @Prop({default: false}) readonly isLoading!: boolean;
-  item: any = {};
+  // item: any = {};
 
   beforeOpen(event: any) {
-    if (event.params.item) {
-      this.item = event.params.item
-    }
+    // if (event.params.item) {
+    //   this.item = event.params.item
+    // }
   }
 
   closeModal() {
@@ -50,7 +50,8 @@ export default class ModalConfirm extends Vue {
   }
 
   submitForm() {
-    this.$emit('submit', this.item);
+    this.$emit('submit');
+    // this.$emit('submit', this.item);
   }
 }
 </script>

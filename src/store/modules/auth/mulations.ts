@@ -1,10 +1,10 @@
 import { MutationTree } from 'vuex';
 import { AuthState } from './state';
-import { Authenticate } from '@/shared/models/authenticate';
+import { User } from '@/shared/models/user';
 
 const mutations: MutationTree<AuthState> = {
-  setUser(state, payload: Authenticate) {
-    state.auth = payload;
+  setUser(state, payload: User) {
+    state.user = payload;
   },
 };
 export default mutations;

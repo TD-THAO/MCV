@@ -26,12 +26,7 @@
 
       <div class="CV-template">
         <Template1 v-if="!isLoading"
-          :user="user"
-          :resume="resume"
-          :certificates="certificates"
-          :experiences="experiences"
-          :languages="languages"
-          :skills="skills"
+          :application="application"
           :classes="initTemplateClass()"
         />
       </div>
@@ -52,12 +47,9 @@ import CertificateApi from '@/shared/api/Certificate';
 import ExperienceApi from '@/shared/api/Experience';
 import SkillApi from '@/shared/api/Skill';
 import LanguageApi from '@/shared/api/Language';
-import { Authenticate } from '@/shared/models/authenticate';
+import ApplicationApi from '@/shared/api/Application';
 import { User } from '@/shared/models/user';
-import { Resume } from '@/shared/models/resume';
-import { Certificate } from '@/shared/models/certificate';
-import { Experience } from '@/shared/models/experience';
-import { Language } from '@/shared/models/language';
+import { Application } from '@/shared/models/application';
 
 @Component({
   components: {
@@ -66,32 +58,27 @@ import { Language } from '@/shared/models/language';
   },
   computed: {
     ...mapState('auth', [
-      'auth',
+      'user',
     ]),
   },
 })
 
 export default class DetailTemplate extends Vue {
   isLoading: boolean = false;
-  userId: string = '';
-  auth: Authenticate;
-  user: User = new User();
-  resume: Resume = new Resume();
-  certificates: Certificate[] = [];
-  experiences: Experience[] = [];
-  languages: Language[] = [];
-  skills: String[] = [];
+  user: User;
+  application: Application = new Application();
+  isSubmitting: boolean = false;
 
-  @Watch('auth')
-  watchAuth(newVal: Authenticate, oldVal: Authenticate) {
-    this.userId = newVal.uid;
-    this.initData(newVal.uid);
+  @Watch('user')
+  watchAuth(newVal: User, oldVal: User) {
+    if (newVal) {
+      this.initData(this.user.id);
+    }
   }
 
   mounted() {
-    if (this.auth.uid) {
-      this.userId = this.auth.uid;
-      this.initData(this.auth.uid);
+    if (this.user.id) {
+      this.initData(this.user.id);
     }
   }
 
@@ -114,39 +101,21 @@ export default class DetailTemplate extends Vue {
   async initData(uid: string) {
     try {
       this.isLoading = true;
-      const resUser = await UserApi.getUserInfo(uid);
-      const resResume = await ResumeApi.getResume(uid);
-      const resCertificate = await CertificateApi.getCertificate(uid);
-      const resExperience = await ExperienceApi.getExperiences(uid);
-      const resSkill = await SkillApi.getSkills(uid);
-      const resLanguage = await LanguageApi.getLanguages(uid);
-
-      if (resUser) {
-        this.user = new User().deserialize(resUser);
+      const user = await UserApi.getUserInfo(uid);
+      const resume = await ResumeApi.getResume(uid);
+      const certificates = this.convertData(await CertificateApi.getCertificate(uid));
+      const experiences =  this.convertData(await ExperienceApi.getExperiences(uid));
+      const skills = await SkillApi.getSkills(uid);
+      const languages =  this.convertData(await LanguageApi.getLanguages(uid));
+      const data = {
+        user,
+        resume,
+        certificates,
+        experiences,
+        skills,
+        languages,
       }
-
-      if (resResume) {
-        this.resume = new Resume().deserialize(resResume);
-      }
-
-      if (resCertificate) {
-        const result = this.convertData(resCertificate);
-        this.certificates = result.map((item: Certificate) => new Certificate().deserialize(item));
-      }
-
-      if (resExperience) {
-        const result = this.convertData(resExperience);
-        this.experiences = result.map((item: Experience) => new Experience().deserialize(item));
-      }
-
-      if (resSkill) {
-        this.skills = resSkill
-      }
-
-      if (resLanguage) {
-        const result = this.convertData(resLanguage);
-        this.languages = result.map((item: Language) => new Language().deserialize(item));
-      }
+      this.application = new Application().deserialize(data)
       this.isLoading = false
     } catch (error) {
       this.isLoading = false
@@ -167,13 +136,21 @@ export default class DetailTemplate extends Vue {
   }
 
   changeTemplate() {
-    this.$router.push(`/admin/templates`);
+    this.$router.push(`/user/templates`);
   }
 
-  sendCV() {}
+  sendCV() {
+    console.log(this.application)
+    ApplicationApi
+      .createAndUpdate(this.user.id, this.application.formJSONString())
+      .then((res: any) => {
+        Toast.success('Đã gửi CV thành công');
+        this.isSubmitting = false;
+      })
+      .catch((error: any) => {
+        this.isSubmitting = false;
+        Toast.handleError(error);
+      });
+  }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -1,15 +1,13 @@
-import { Authenticate } from '@/shared/models/authenticate';
+import { User } from '@/shared/models/user';
 
 export interface AuthState {
   token: string | null;
-  isLoading: boolean;
-  auth: Authenticate;
+  user: User;
 }
 
 const state: AuthState = {
   token: null,
-  isLoading: false,
-  auth: new Authenticate(),
+  user: new User(),
 };
 
 export default state;

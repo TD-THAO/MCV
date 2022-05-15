@@ -118,8 +118,10 @@ export default class Register extends Vue {
   }
 
   private createUserInfor(auth: Authenticate) {
+    console.log(auth, 111)
     const dataSet = new User();
     dataSet.email = auth.email;
+    dataSet.id = auth.uid;
 
     UserApi.create(auth.uid, dataSet.formJSONString())
     .then((res: any) => {
@@ -131,6 +133,10 @@ export default class Register extends Vue {
       this.isLoading = false;
       Toast.handleError(error);
     });
+  }
+
+  handleRedirect() {
+    this.$router.push('/login');
   }
 }
 </script>

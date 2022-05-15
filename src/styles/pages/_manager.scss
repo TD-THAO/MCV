@@ -1,0 +1,28 @@
+.breadcrumb {
+  background-color: transparent;
+}
+
+.mannager {
+  min-height: calc(100vh);
+
+  &-right {
+    background-color: #eff3f6;
+    margin-left: 280px;
+    background-color: #eff3f6;
+  }
+
+  &-left {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+    height: auto;
+    line-height: inherit;
+    width: 280px;
+    text-align: left;
+    transition: 0.3s;
+    box-shadow: 0 0 21px 0 rgba(89, 102, 122, 0.1);
+    background: url(~@/assets/bg-01.jpg) no-repeat;
+    background-size: cover;
+  }
+}
