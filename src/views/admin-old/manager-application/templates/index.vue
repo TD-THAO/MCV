@@ -102,7 +102,6 @@ export default class Templates extends Vue {
 
   getImgUrl(item: any) {
     const images = require.context('@/assets/templates', false, /\.jpg$/)
-    console.log(images('./' + item + '.jpg'), 1111)
     return images('./' + item + '.jpg')
   }
 }

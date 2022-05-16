@@ -4,7 +4,7 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <router-link class="nav-link"
-            to="/admin">
+            to="/">
             Trang chủ
           </router-link>
 

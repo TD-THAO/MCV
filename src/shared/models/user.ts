@@ -17,6 +17,9 @@ export interface UserInput {
   new_password: string;
   confirm_new_password: string;
   role: string;
+  company_name: string;
+  company_address: string;
+  describe: string;
 }
 
 export class User implements Deserializable<User>, UserInput {
@@ -36,6 +39,9 @@ export class User implements Deserializable<User>, UserInput {
   new_password: string;
   confirm_new_password: string;
   role: string = 'USER';
+  company_name: string = '';
+  company_address: string = '';
+  describe: string = '';
 
   get birthdayString() {
     if (this.day && this.month && this.year) {
@@ -86,6 +92,9 @@ export class User implements Deserializable<User>, UserInput {
       year: this.year,
       role: this.role,
       id: this.id,
+      company_name: this.company_name,
+      company_address: this.company_address,
+      describe: this.describe,
     };
 
     return data;

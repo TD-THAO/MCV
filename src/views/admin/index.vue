@@ -67,6 +67,7 @@ export default class ManagerApplication extends Vue {
     UserApi.getUserInfo(uid)
     .then((res: any) => {
       this.user = new User().deserialize(res);
+      this.$store.dispatch('auth/setUser', this.user);
       this.isLoading = false;
     })
     .catch((error: any) => {

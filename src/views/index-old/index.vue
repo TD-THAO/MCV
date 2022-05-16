@@ -22,11 +22,10 @@
           </div>
         </div>
       </nav>
+
     </div>
 
-    <div class="home__body">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
 
     <footer class="home__footer">
       <div class="container">
@@ -43,10 +42,51 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Sidebar from '@/layouts/Sidebar.vue';
+import Header from '@/layouts/Header.vue';
+
+import JobApi from '@/shared/api/Job';
+import Toast from '@/shared/utils/Toast';
+import { Job } from '@/shared/models/job';
 
 @Component({
-  components: {},
+  components: {
+    Header,
+    Sidebar,
+  },
 })
-export default class Index extends Vue {
+export default class Home extends Vue {
+  jobs:Job[] = [];
+  isLoading: boolean = false;
+
+  mounted() {
+    this.getJobs();
+  }
+
+  getJobs() {
+    this.isLoading = true;
+    this.jobs = [];
+    JobApi
+      .getJobs()
+      .then((res: any) => {
+        this.isLoading = false;
+        if (res) {
+          Object.keys(res).map((key) => {
+            const item = new Job().deserialize({
+              id: key,
+              ...res[key]
+            });
+            this.jobs.push(item);
+          });
+        }
+      })
+      .catch((error: any) => {
+        this.isLoading = false;
+        Toast.handleError(error);
+      });
+  }
 }
 </script>
+<style scoped lang="scss">
+@import 'index.scss';
+</style>

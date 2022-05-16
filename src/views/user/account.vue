@@ -344,7 +344,6 @@ export default class PersonalInfomation extends Vue {
   }
 
   handleConfirm() {
-    console.log(this.user)
     this.isLoading = true;
 
     firebase.auth().sendPasswordResetEmail(this.user.email)

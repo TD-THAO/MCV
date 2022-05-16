@@ -12,35 +12,32 @@
 
     <div class="card text-left c-card mx-3">
       <div class="card-header">
-        <h3 class="card-title">Quản lý bài đăng</h3>
+        <h3 class="card-title">Quản lý hồ sơ ứng viên</h3>
       </div>
 
       <div class="card-body">
         <div class="c-table">
-          <div v-for="item in jobs" :key="item.id"
+          <div v-for="item in applications" :key="item.id"
             class="c-table__item d-flex justify-content-between align-items-center py-3 border-bottom"
           >
             <div class="flex-1">
               <p class="mb-0">
-                <strong>{{ item.position }}</strong>
+                <strong>{{ item.user.name }}</strong>
               </p>
               <div class="row mt-3">
                 <div class="col-4">
                   <p class="small mb-0">
-                    <i class="fa fa-usd mr-2"></i>
-                    <strong>Lương:</strong> {{ item.min_expected_salary }} -  {{ item.max_expected_salary }}
+                    <strong>Vị trí:</strong> {{ item.resume.position }}
                   </p>
                 </div>
                 <div class="col-4">
                   <p class="small mb-0">
-                    <i class="fa fa-map-home mr-2"></i>
-                    <strong>Địa điểm:</strong> {{ item.workplace }}
+                    <strong>Năm kinh nghiệm:</strong> {{ yearExp[item.resume.year_experience] }}
                   </p>
                 </div>
                 <div class="col-4">
                   <p class="small mb-0">
-                    <i class="fa fa-calendar mr-2"></i>
-                    <strong>Hạn nộp:</strong> {{ item.dateString }}
+                    <strong>Cấp bậc:</strong> {{ rank[item.resume.rank] }}
                   </p>
                 </div>
               </div>
@@ -49,11 +46,10 @@
               <button
                 type="button"
                 class="btn btn-primary btn-sm mr-2"
-                @click="openModalCEJob(item)"
+                @click="handleRedirect(item)"
               >
-                <i class="fa fa-pencil-square-o"></i>
+                <i class="fa fa-eye"></i>
               </button>
-
               <button
                 type="button"
                 class="btn btn-danger btn-sm"
@@ -63,7 +59,7 @@
               </button>
             </div>
           </div>
-          <p v-if="!jobs.length"
+          <p v-if="!applications.length"
             class="text-black-50 text-center p-3 mb-0"
           >
             Không có dữ liệu
@@ -71,11 +67,6 @@
         </div>
       </div>
     </div>
-    <ModalCEJob
-      name="modalCEJob"
-      textBtnConfirm="Xóa"
-      @submit="submitModalCE"
-    />
 
     <ModalConfirm
       name="modalConfirmDelete"
@@ -90,18 +81,16 @@
 import { mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import PageLoader from '@/components/PageLoader.vue';
-import ModalCEJob from '@/components/modal/ModalCEJob.vue';
 import ModalConfirm from '@/components/modal/ModalConfirm.vue';
 
-import JobApi from '@/shared/api/Job';
+import ApplicationApi from '@/shared/api/Application';
 import Toast from '@/shared/utils/Toast';
 import { User } from '@/shared/models/user';
-import { Job } from '@/shared/models/job';
-
+import { Application } from '@/shared/models/application';
+import { YEARS_EXPERIENCE_STRING, RANK_STRING } from '@/shared/enums/resume'
 @Component({
   components: {
     PageLoader,
-    ModalCEJob,
     ModalConfirm,
   },
   computed: {
@@ -111,9 +100,11 @@ import { Job } from '@/shared/models/job';
   },
 })
 export default class Jobs extends Vue {
-  jobs:Job[] = [];
+  applications: Application[] = [];
   user: User;
   isLoading: boolean = false;
+  yearExp = YEARS_EXPERIENCE_STRING;
+  rank = RANK_STRING;
 
   // @Watch('user')
   // watchAuth(newVal: User, oldVal: User) {
@@ -123,23 +114,23 @@ export default class Jobs extends Vue {
   // }
 
   mounted() {
-    this.getJobs();
+    this.getApplications();
   }
 
-  getJobs() {
+  getApplications() {
     this.isLoading = true;
-    this.jobs = [];
-    JobApi
-      .getJobs()
+    this.applications = [];
+    ApplicationApi
+      .getApplications()
       .then((res: any) => {
         this.isLoading = false;
         if (res) {
           Object.keys(res).map((key) => {
-            const item = new Job().deserialize({
+            const item = new Application().deserialize({
               id: key,
               ...res[key]
             });
-            this.jobs.push(item);
+            this.applications.push(item);
           });
         }
       })
@@ -149,37 +140,34 @@ export default class Jobs extends Vue {
       });
   }
 
-  openModalCEJob(item = null) {
-    const params = {
-      user_id: this.user.id,
-      item
-    }
-
-    this.$modal.show('modalCEJob', params);
-  }
-
-  openModalConfirmDelete(item: Job) {
+  openModalConfirmDelete(item: Application) {
     this.$modal.show('modalConfirmDelete', { item });
-  }
-
-  submitModalCE() {
-    this.getJobs();
   }
 
   confirmDelete(item: any) {
     this.isLoading = true;
-    JobApi
+    ApplicationApi
       .remove(item.id)
       .then((res: any) => {
         Toast.success('Xóa thành công');
         this.$modal.hide('modalConfirmDelete');
-        this.getJobs();
+        this.getApplications();
         this.isLoading = false;
       })
       .catch((error: any) => {
         this.isLoading = false;
         Toast.handleError(error);
       });
+  }
+
+  handleRedirect(item: Application) {
+    this.$router.push(`/admin/applications/${item.id}`);
+    // this.$router.push({
+    //   path: `/admin/applications/${item.id}`,
+    //   query: {
+    //     user_id: item.user.id
+    //   }
+    // });
   }
 }
 </script>

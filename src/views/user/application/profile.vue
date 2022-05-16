@@ -271,7 +271,6 @@
 </template>
 
 <script lang='ts'>
-import firebase from 'firebase';
 import range from 'lodash/range';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { Component, Vue, Watch } from 'vue-property-decorator';

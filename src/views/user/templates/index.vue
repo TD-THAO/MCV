@@ -1,37 +1,39 @@
 <template>
   <div>
-    <div v-if="!isLoading"
-      class="bg-white px-4 py-3 c-card text-left mx-3">
-      <div class="admin-ctn__title">
-        <h5 class="font-weight-bold mb-3">Mẫu hồ sơ</h5>
+    <div class="card text-left c-card mx-3">
+      <div class="card-header">
+        <h3 class="card-title">Mẫu hồ sơ</h3>
       </div>
 
-      <div class="templates row">
-        <div v-for="item in templates"
-          :key="item.id"
-          class="col-3"
-          @click="chooseTemplate(item)"
-        >
-          <div class="card">
-            <img
-              class="card-img-top"
-              :src="getImgUrl(item.image_name)"
-              alt="Card image cap"
-            >
-            <div class="img-hover">
-              <button
-                type="button"
-                class="btn btn-outline-primary"
-                @click="chooseTemplate(item)"
+      <div class="card-body">
+        <div class="templates row">
+          <div v-for="item in templates"
+            :key="item.id"
+            class="col-3"
+            @click="chooseTemplate(item)"
+          >
+            <div class="card-item">
+              <img
+                class="card-img-top"
+                :src="getImgUrl(item.image_name)"
+                alt="Card image cap"
               >
-                Xem
-              </button>
+              <div class="img-hover">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="chooseTemplate(item)"
+                >
+                  Xem
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <PageLoader v-else/>
+
+    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
@@ -99,7 +101,7 @@ export default class Templates extends Vue {
 </script>
 
 <style scoped lang="scss">
-.card {
+.card-item {
   overflow: hidden;
   cursor: pointer;
   position: relative;

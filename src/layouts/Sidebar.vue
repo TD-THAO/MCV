@@ -61,7 +61,7 @@ export default class Sidebar extends Vue {
     {
       name: 'Quản lý hồ sơ',
       icon: 'fa fa-address-card',
-      path: '/user/application',
+      path: '/user/application/profile',
     },
     {
       name: 'Mẫu hồ sơ',
@@ -71,7 +71,7 @@ export default class Sidebar extends Vue {
     {
       name: 'Quản lý tài khoản',
       icon: 'fa fa-user',
-      path: '/user',
+      path: '/user/profile',
     },
   ];
   sidebarMenus: any[] = [];

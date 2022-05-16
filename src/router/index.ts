@@ -4,7 +4,9 @@ import ErrorPage from '@/components/ErrorPage.vue';
 import UnAuthRoutes from './unauth';
 import AdminRoutes from './admin/index';
 import UserRoutes from './user/index';
-import Home from '@/views/index.vue';
+import Index from '@/views/index.vue';
+import Home from '@/views/home.vue';
+import Jobs from '@/views/jobs.vue';
 
 Vue.use(VueRouter);
 
@@ -19,8 +21,26 @@ const routes: RouteConfig[] = [
   },
   {
     path: '',
-    name: 'Home',
-    component: Home,
+    name: 'Index',
+    component: Index,
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        component: Home,
+      },
+      {
+        path: 'jobs',
+        name: 'Jobs',
+        component: Jobs,
+      },
+      {
+        path: '',
+        redirect: {
+          name: 'Home'
+        },
+      },
+    ]
   },
   {
     path: '*',

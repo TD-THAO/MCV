@@ -2,31 +2,13 @@
   <div>
     <div class="card text-left c-card mx-3">
       <div class="card-header">
-        <h3 class="card-title">Chi tiết mẫu hồ sơ</h3>
-      </div>
-
-      <div class="mb-3 d-flex justify-content-end mt-3 mx-3">
-        <button
-          type="button"
-          class="btn btn-outline-primary mr-3"
-          @click="changeTemplate"
-        >
-          Đổi mẫu
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="sendCV"
-        >
-          Gửi CV
-        </button>
+        <h3 class="card-title">Chi tiết hồ sơ ứng viên</h3>
       </div>
 
       <div class="CV-template">
         <Template1 v-if="!isLoading"
           :application="application"
-          :classes="initTemplateClass()"
+          :classes="templateClass"
         />
       </div>
     </div>
@@ -35,8 +17,7 @@
 </template>
 
 <script lang='ts'>
-import { mapState } from 'vuex';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import Toast from '@/shared/utils/Toast';
 import PageLoader from '@/components/PageLoader.vue';
 import Template1 from '@/components/templates/Template1.vue';
@@ -56,11 +37,6 @@ import { Application } from '@/shared/models/application';
     Template1,
     PageLoader,
   },
-  computed: {
-    ...mapState('auth', [
-      'user',
-    ]),
-  },
 })
 
 export default class DetailTemplate extends Vue {
@@ -68,26 +44,22 @@ export default class DetailTemplate extends Vue {
   user: User;
   application: Application = new Application();
   isSubmitting: boolean = false;
+  templateClass: string = '';
 
-  @Watch('user')
-  watchAuth(newVal: User, oldVal: User) {
-    if (newVal) {
-      this.initData(this.user.id);
-    }
+  get userId() {
+    return this.$route.params.id;
   }
 
   mounted() {
-    if (this.user.id) {
-      this.initData(this.user.id);
-    }
+    this.initData(this.userId);
   }
 
   showTemplate(id: string) {
     return id === this.$route.params.id
   }
 
-  initTemplateClass() {
-    switch (this.$route.params.id) {
+  initTemplateClass(templateId: string) {
+    switch (`${templateId}`) {
       case '2':
         return 'template--purple';
       case '3':
@@ -118,6 +90,7 @@ export default class DetailTemplate extends Vue {
         template
       }
       this.application = new Application().deserialize(data)
+      this.templateClass = this.initTemplateClass(template.template_id);
       this.isLoading = false
     } catch (error) {
       this.isLoading = false
@@ -135,23 +108,6 @@ export default class DetailTemplate extends Vue {
       array.push(item);
     });
     return array;
-  }
-
-  changeTemplate() {
-    this.$router.push(`/user/templates`);
-  }
-
-  sendCV() {
-    ApplicationApi
-      .createAndUpdate(this.user.id, this.application.formJSONString())
-      .then((res: any) => {
-        Toast.success('Đã gửi CV thành công');
-        this.isSubmitting = false;
-      })
-      .catch((error: any) => {
-        this.isSubmitting = false;
-        Toast.handleError(error);
-      });
   }
 }
 </script>

@@ -98,7 +98,6 @@ export default class DetailTemplate extends Vue {
       this.userId = this.auth.uid;
       this.initData(this.auth.uid);
     }
-    console.log(this.application, 111)
   }
 
   showTemplate(id: string) {
@@ -159,7 +158,6 @@ export default class DetailTemplate extends Vue {
   }
 
   sendCV() {
-    console.log(this.application)
     ApplicationApi
       .createAndUpdate(this.userId, this.application.formJSONString())
       .then((res: any) => {
