@@ -241,7 +241,7 @@ export default class ModalCECertificate extends Vue {
     CertificateApi
       .create(this.userId, this.certificate.formJSONString())
       .then((res: any) => {
-        Toast.success('Thêm Sửa học vấn & bằng cấp thành công');
+        Toast.success('Thêm học vấn & bằng cấp thành công');
         this.$emit('submit')
         this.closeModal()
         this.isSubmitting = false;
@@ -261,7 +261,7 @@ export default class ModalCECertificate extends Vue {
         this.certificate.formJSONString()
       )
       .then((res: any) => {
-        Toast.success('Cập nhật Sửa học vấn & bằng cấp thành công');
+        Toast.success('Cập nhật học vấn & bằng cấp thành công');
         this.$emit('submit')
         this.closeModal()
         this.isSubmitting = false;

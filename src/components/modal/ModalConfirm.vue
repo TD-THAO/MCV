@@ -49,7 +49,7 @@ export default class ModalConfirm extends Vue {
     this.$modal.hide(this.name);
   }
 
-  submitForm() {
+  submitForm() {;
     this.$emit('submit', this.item);
   }
 }

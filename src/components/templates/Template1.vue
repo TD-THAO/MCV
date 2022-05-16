@@ -14,17 +14,17 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <span class="nav-link">
-                <strong>Giới tính: </strong>{{ user.genderString }}
+                <strong>Giới tính: </strong>{{ application.user.genderString }}
               </span>
             </li>
             <li class="nav-item">
               <span class="nav-link">
-                <strong>Ngày sinh: </strong>{{ user.birthdayString }}
+                <strong>Ngày sinh: </strong>{{ application.user.birthdayString }}
               </span>
             </li>
             <li class="nav-item">
               <span class="nav-link">
-                <strong>Điện thoại: </strong>{{ user.phone }}
+                <strong>Điện thoại: </strong>{{ application.user.phone }}
               </span>
             </li>
           </ul>
@@ -39,14 +39,14 @@
               <span class="text-primary">Taylor</span>
             </h1> -->
             <h1 class="mb-0 text-primary">
-              {{ user.name }}
+              {{ application.user.name }}
             </h1>
             <div class="subheading mb-5">
-              {{ user.addressString }}
-              <span class="text-primary"> · {{ user.email }}</span>
+              {{ application.user.addressString }}
+              <span class="text-primary"> · {{ application.user.email }}</span>
             </div>
             <p class="lead mb-5">
-              {{ resume.describe }}
+              {{ application.resume.describe }}
             </p>
           </div>
         </section>
@@ -55,7 +55,7 @@
         <section class="resume-section" id="experience">
           <div class="resume-section-content">
             <h2 class="mb-5">Kinh nghiệm</h2>
-            <div v-for="(item, index) in experiences" :key="index"
+            <div v-for="(item, index) in application.experiences" :key="index"
               class="d-flex flex-column flex-md-row justify-content-between mb-5">
               <div class="flex-grow-1">
                 <h3 class="mb-0">{{ item.company }}</h3>
@@ -77,7 +77,7 @@
         <section class="resume-section" id="education">
           <div class="resume-section-content">
             <h2 class="mb-5">Học vấn - Bằng cấp</h2>
-            <div v-for="(item, index) in certificates" :key="index"
+            <div v-for="(item, index) in application.certificates" :key="index"
               class="d-flex flex-column flex-md-row justify-content-between mb-5">
               <div class="flex-grow-1">
                 <h3 class="mb-0">{{ item.school_name }}</h3>
@@ -100,7 +100,7 @@
             <h2 class="mb-5">Kỹ năng</h2>
             <!-- <div class="subheading mb-3">Workflow</div> -->
             <ul class="fa-ul mb-0">
-              <li v-for="(item, index) in skills" :key="index">
+              <li v-for="(item, index) in application.skills" :key="index">
                 <i class="fa fa-check"></i>
                 {{ skillName[item] }}
               </li>
@@ -113,7 +113,7 @@
           <div class="resume-section-content">
             <h2 class="mb-5">Ngôn ngữ</h2>
             <ul class="fa-ul mb-0">
-              <li v-for="(item, index) in languages" :key="index">
+              <li v-for="(item, index) in application.languages" :key="index">
                 <i class="fa fa-check"></i>
                 {{ languageName[item.name] }}
               </li>
@@ -126,39 +126,16 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Template } from '@/shared/models/template';
-import { Authenticate } from '@/shared/models/authenticate';
-import { User } from '@/shared/models/user';
-import { Resume } from '@/shared/models/resume';
-import { Certificate } from '@/shared/models/certificate';
-import { Experience } from '@/shared/models/experience';
-import { Language } from '@/shared/models/language';
+import { Application } from '@/shared/models/application';
 import { SKILL_NAME } from '@/shared/enums/skill';
 import { LANGUAGE_NAME } from '@/shared/enums/language';
 
 @Component({
 })
 export default class ModalCEEXperience extends Vue {
-  @Prop() readonly user: User;
-  @Prop() readonly resume: Resume;
-  @Prop() readonly certificates: Certificate;
-  @Prop() readonly experiences: Experience;
-  @Prop() readonly languages: Language;
-  @Prop() readonly skills: String[];
+  @Prop() readonly application: Application;
   @Prop() readonly classes: String;
   skillName = SKILL_NAME;
   languageName = LANGUAGE_NAME;
-
-  mounted() {
-    console.log(this.user, 'user')
-    console.log(this.resume, 'resume')
-    console.log(this.certificates, 'certificates')
-    console.log(this.experiences, 'experiences')
-    console.log(this.languages, 'languages')
-    console.log(this.skills, 'skills')
-  }
 }
 </script>
-<style lang="scss">
-
-</style>

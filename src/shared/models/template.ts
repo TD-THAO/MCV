@@ -28,7 +28,7 @@ export class Template implements Deserializable<Template>, TemplateInput {
 
   formJSONString() {
     const data = {
-      tempalte_id: this.id,
+      template_id: this.id,
       name: this.name,
       image_name: this.image_name,
     };

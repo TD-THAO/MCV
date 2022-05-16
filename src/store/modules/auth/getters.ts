@@ -2,8 +2,7 @@ import { AuthState } from './state';
 import { GetterTree } from 'vuex';
 
 const getters: GetterTree<AuthState, any> = {
-  authenticate: (state) => state.auth,
-  isLoading: (state) => state.isLoading,
+  user: (state) => state.user,
 };
 
 export default getters;

@@ -15,17 +15,19 @@ export interface CertificateInput {
 export class Certificate implements Deserializable<Certificate>, CertificateInput {
   id: string;
   title: string = '';
-  career_name: string = ''
-  school_name: string = ''
-  specialized: string = ''
-  start_at: string = ''
-  end_at: string = ''
-  gra_certificate: string = ''
-  info: string = ''
+  career_name: string = '';
+  school_name: string = '';
+  specialized: string = '';
+  start_at: string = '';
+  end_at: string = '';
+  gra_certificate: string = '';
+  info: string = '';
 
   constructor() {
     // this.deserialize({});
   }
+
+
 
   deserialize(input: Partial<CertificateInput>): Certificate {
     if (!input) {

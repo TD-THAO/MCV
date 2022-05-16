@@ -32,6 +32,7 @@
           :experiences="experiences"
           :languages="languages"
           :skills="skills"
+          :application="application"
           :classes="initTemplateClass()"
         />
       </div>
@@ -52,12 +53,14 @@ import CertificateApi from '@/shared/api/Certificate';
 import ExperienceApi from '@/shared/api/Experience';
 import SkillApi from '@/shared/api/Skill';
 import LanguageApi from '@/shared/api/Language';
+import ApplicationApi from '@/shared/api/Application';
 import { Authenticate } from '@/shared/models/authenticate';
 import { User } from '@/shared/models/user';
 import { Resume } from '@/shared/models/resume';
 import { Certificate } from '@/shared/models/certificate';
 import { Experience } from '@/shared/models/experience';
 import { Language } from '@/shared/models/language';
+import { Application } from '@/shared/models/application';
 
 @Component({
   components: {
@@ -81,6 +84,8 @@ export default class DetailTemplate extends Vue {
   experiences: Experience[] = [];
   languages: Language[] = [];
   skills: String[] = [];
+  application: Application = new Application();
+  isSubmitting: boolean = false;
 
   @Watch('auth')
   watchAuth(newVal: Authenticate, oldVal: Authenticate) {
@@ -116,37 +121,19 @@ export default class DetailTemplate extends Vue {
       this.isLoading = true;
       const resUser = await UserApi.getUserInfo(uid);
       const resResume = await ResumeApi.getResume(uid);
-      const resCertificate = await CertificateApi.getCertificate(uid);
-      const resExperience = await ExperienceApi.getExperiences(uid);
+      const resCertificate = this.convertData(await CertificateApi.getCertificate(uid));
+      const resExperience =  this.convertData(await ExperienceApi.getExperiences(uid));
       const resSkill = await SkillApi.getSkills(uid);
-      const resLanguage = await LanguageApi.getLanguages(uid);
-
-      if (resUser) {
-        this.user = new User().deserialize(resUser);
+      const resLanguage =  this.convertData(await LanguageApi.getLanguages(uid));
+      const data = {
+        user: resUser,
+        resume: resResume,
+        certificates: resCertificate,
+        experiences: resExperience,
+        skills: resSkill,
+        languages: resLanguage,
       }
-
-      if (resResume) {
-        this.resume = new Resume().deserialize(resResume);
-      }
-
-      if (resCertificate) {
-        const result = this.convertData(resCertificate);
-        this.certificates = result.map((item: Certificate) => new Certificate().deserialize(item));
-      }
-
-      if (resExperience) {
-        const result = this.convertData(resExperience);
-        this.experiences = result.map((item: Experience) => new Experience().deserialize(item));
-      }
-
-      if (resSkill) {
-        this.skills = resSkill
-      }
-
-      if (resLanguage) {
-        const result = this.convertData(resLanguage);
-        this.languages = result.map((item: Language) => new Language().deserialize(item));
-      }
+      this.application = new Application().deserialize(data)
       this.isLoading = false
     } catch (error) {
       this.isLoading = false
@@ -170,7 +157,18 @@ export default class DetailTemplate extends Vue {
     this.$router.push(`/admin/templates`);
   }
 
-  sendCV() {}
+  sendCV() {
+    ApplicationApi
+      .createAndUpdate(this.userId, this.application.formJSONString())
+      .then((res: any) => {
+        Toast.success('Đã gửi CV thành công');
+        this.isSubmitting = false;
+      })
+      .catch((error: any) => {
+        this.isSubmitting = false;
+        Toast.handleError(error);
+      });
+  }
 }
 </script>
 

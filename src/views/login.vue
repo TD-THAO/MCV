@@ -34,7 +34,7 @@
 
         <router-link
           class="text-muted"
-          to="/forgot-password">
+          to="/password-forgot">
           Quên mật khẩu?
         </router-link>
       </div>
@@ -48,6 +48,7 @@ import firebase from 'firebase';
 import { User } from '@/shared/models/user';
 import Toast from '@/shared/utils/Toast';
 import { FIREBASE_ERRORS, FIREBASE_ERRORS_MESSAGES } from '@/shared/enums/firebase-errors';
+import UserApi from '@/shared/api/User';
 
 @Component({
   components: {},
@@ -60,9 +61,24 @@ export default class Login extends Vue {
     this.isLoading = true;
     firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
     .then((res: any) => {
+      this.getUserInfo(res.user.uid)
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
+  }
+
+  getUserInfo(uid: string) {
+    UserApi.getUserInfo(uid)
+    .then((res: any) => {
       this.isLoading = false;
       this.user = new User().deserialize(res);
-      this.$router.push('/admin');
+      if (this.user.isAdmin) {
+        this.$router.push('/admin');
+        return;
+      }
+      this.$router.push('/user');
     })
     .catch((error: any) => {
       this.isLoading = false;
@@ -73,5 +89,18 @@ export default class Login extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "login.scss";
+.auth {
+  .login-regist {
+      p {
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+    }
+
+    a {
+      padding-left: 7px;
+    }
+  }
+}
+
 </style>

@@ -21,36 +21,71 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import firebase from 'firebase';
+import { mapState } from 'vuex';
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
+import { Authenticate } from '@/shared/models/authenticate';
+import { User } from '@/shared/models/user';
+import UserApi from '@/shared/api/User';
+import Toast from '@/shared/utils/Toast';
 
 @Component({
   components: {
   },
 })
 export default class Sidebar extends Vue {
-  sidebarMenus = [
+  @Prop() readonly user: User;
+
+  adminMenus = [
+    {
+      name: 'Hồ sơ ứng viên',
+      icon: 'fa fa-address-card',
+      path: '/admin/applications',
+    },
+    {
+      name: 'Quản lý ứng viên',
+      icon: 'fa fa-address-book',
+      path: '/admin/users',
+    },
+    {
+      name: 'Quản lý bài đăng',
+      icon: 'fa fa-user',
+      path: '/admin/jobs',
+    },
+    {
+      name: 'Thông tin cá nhân',
+      icon: 'fa fa-user',
+      path: '/admin',
+    },
+  ];
+  userMenus = [
     {
       name: 'Quản lý hồ sơ',
       icon: 'fa fa-address-card',
-      path: '/admin/complete-profile',
+      path: '/user/application/profile',
     },
     {
       name: 'Mẫu hồ sơ',
       icon: 'fa fa-address-book',
-      path: '/admin/templates',
+      path: '/user/templates',
     },
     {
       name: 'Quản lý tài khoản',
       icon: 'fa fa-user',
-      path: '/admin',
+      path: '/user/profile',
     },
-    // {
-    //   name: 'Đổi mật khẩu',
-    //   icon: 'fa fa-th',
-    //   path: '/admin/change-password',
-    // },
   ];
+  sidebarMenus: any[] = [];
+
+  @Watch('user')
+  watchUser(newVal: User, oldVal: User) {
+    if (newVal && newVal.isAdmin) {
+      this.sidebarMenus = this.adminMenus;
+      return;
+    }
+
+    this.sidebarMenus = this.userMenus;
+  }
+
 
   activeRoute(item: any) {
     if (item.path === this.$route.path) {
@@ -58,6 +93,26 @@ export default class Sidebar extends Vue {
     }
 
     return false;
+  }
+
+  getUserInfo(uid: string) {
+    // this.isLoading = true;
+
+    // UserApi.getUserInfo(uid)
+    // .then((res: any) => {
+    //   this.user = new User().deserialize(res);
+    //   if (this.user.isAdmin) {
+    //     this.sidebarMenus = this.adminMenus;
+    //   } else {
+    //     this.sidebarMenus = this.userMenus;
+    //   }
+    //   console.log(this.sidebarMenus, 'sidebarMenus')
+    //   // this.isLoading = false;
+    // })
+    // .catch((error: any) => {
+    //   // this.isLoading = false;
+    //   Toast.handleError(error);
+    // });
   }
 }
 </script>

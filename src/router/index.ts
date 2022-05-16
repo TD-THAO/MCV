@@ -1,14 +1,19 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import ErrorPage from '@/components/ErrorPage.vue';
-import AuthRoutes from './auth';
+import UnAuthRoutes from './unauth';
 import AdminRoutes from './admin/index';
+import UserRoutes from './user/index';
+import Index from '@/views/index.vue';
+import Home from '@/views/home.vue';
+import Jobs from '@/views/jobs.vue';
 
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
-  ...AuthRoutes,
+  ...UnAuthRoutes,
   ...AdminRoutes,
+  ...UserRoutes,
   {
     path: '/404',
     name: 'PageNotFound',
@@ -16,7 +21,26 @@ const routes: RouteConfig[] = [
   },
   {
     path: '',
-    redirect: { name: 'Login' },
+    name: 'Index',
+    component: Index,
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        component: Home,
+      },
+      {
+        path: 'jobs',
+        name: 'Jobs',
+        component: Jobs,
+      },
+      {
+        path: '',
+        redirect: {
+          name: 'Home'
+        },
+      },
+    ]
   },
   {
     path: '*',
@@ -24,10 +48,10 @@ const routes: RouteConfig[] = [
   },
 ];
 
-const router = new VueRouter({
+const routers = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
 
-export default router;
+export default routers;

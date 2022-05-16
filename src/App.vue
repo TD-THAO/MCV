@@ -3,7 +3,9 @@
     <router-view/>
   </div>
 </template>
-
+<script lang='ts'>
+  // import Helpers from '@/shared/mixins/helpers';
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,46 +1,36 @@
 <template>
-  <div class="mannager d-flex">
-    <div class="mannager-left">
-      <Sidebar :user="user"/>
+  <div class="admin d-flex">
+    <div class="admin-left">
+      <Sidebar />
     </div>
 
-    <div class="mannager-right flex-1">
+    <div class="admin-right flex-1">
       <Header />
 
-      <div clas="mannager-ctn">
+      <div clas="admin-ctn">
         <div class="mt-3">
           <router-view></router-view>
         </div>
       </div>
     </div>
-
-    <PageLoader v-if="isLoading"/>
   </div>
 </template>
 
 <script lang='ts'>
-import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
 import Header from '@/layouts/Header.vue';
 import Sidebar from '@/layouts/Sidebar.vue';
-import PageLoader from '@/components/PageLoader.vue';
-
+import firebase from 'firebase';
 import { Authenticate } from '@/shared/models/authenticate';
-import { User } from '@/shared/models/user';
-import UserApi from '@/shared/api/User';
-import Toast from '@/shared/utils/Toast';
 
 @Component({
   components: {
     Header,
     Sidebar,
-    PageLoader,
   },
 })
 export default class ManagerApplication extends Vue {
   auth: Authenticate = new Authenticate();
-  user: User = new User();
-  isLoading: boolean = false;
 
   mounted() {
     this.checkLogin();
@@ -54,26 +44,43 @@ export default class ManagerApplication extends Vue {
           _ref.auth = new Authenticate().deserialize(res);
           _ref.auth.uid = user.uid;
         });
-        this.getUserInfo(this.auth.uid)
+
+        this.$store.dispatch('auth/setUser', this.auth);
       } else {
         this.$router.push('/login');
       }
     });
   }
-
-  getUserInfo(uid: string) {
-    this.isLoading = true;
-
-    UserApi.getUserInfo(uid)
-    .then((res: any) => {
-      this.user = new User().deserialize(res);
-      this.$store.dispatch('auth/setUser', this.user);
-      this.isLoading = false;
-    })
-    .catch((error: any) => {
-      this.isLoading = false;
-      Toast.handleError(error);
-    });
-  }
 }
 </script>
+
+<style scoped lang='scss'>
+.breadcrumb {
+  background-color: transparent;
+}
+
+.admin {
+  min-height: calc(100vh);
+
+  &-right {
+    background-color: #eff3f6;
+    margin-left: 280px;
+    background-color: #eff3f6;
+  }
+
+  &-left {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+    height: auto;
+    line-height: inherit;
+    width: 280px;
+    text-align: left;
+    transition: 0.3s;
+    box-shadow: 0 0 21px 0 rgba(89, 102, 122, 0.1);
+    background: url(~@/assets/bg-01.jpg) no-repeat;
+    background-size: cover;
+  }
+}
+</style>
