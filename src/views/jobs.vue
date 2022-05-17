@@ -90,6 +90,7 @@ export default class Jobs extends Vue {
 
   handleRedirect(item: Job) {
     this.checkLogin(item);
+    // this.$router.push('/login');
   }
 
   checkLogin(item: Job) {
@@ -104,6 +105,7 @@ export default class Jobs extends Vue {
       } else {
         this.$router.push('/login');
       }
+      console.log(user, 'user')
     });
   }
 
@@ -114,6 +116,7 @@ export default class Jobs extends Vue {
     .then((res: any) => {
       this.isLoading = false;
       this.user = new User().deserialize(res);
+      console.log(this.user, 1111)
       this.$store.dispatch('auth/setUser', this.user);
       if (!this.user.isAdmin) {
         this.$router.push({

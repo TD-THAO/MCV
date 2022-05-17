@@ -56,14 +56,6 @@
           Quay lại đăng nhập
         </button>
       </div>
-
-      <!-- <p class="auth-form__footer mt-5 mb-0">
-        Quay lại
-        <router-link
-          to="/login">
-          Đăng nhập
-        </router-link>
-      </p> -->
     </div>
   </div>
 </template>
