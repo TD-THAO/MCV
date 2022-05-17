@@ -14,11 +14,6 @@
               to="/login">
               Đăng nhập
             </router-link>
-            <!-- <a class="nav-link" href="#">Tuyển dụng</a> -->
-            <!-- <button type="button"
-              class="nav-link btn">
-              Đăng nhập
-            </button> -->
           </div>
         </div>
       </nav>

@@ -106,13 +106,6 @@ export default class Jobs extends Vue {
   yearExp = YEARS_EXPERIENCE_STRING;
   rank = RANK_STRING;
 
-  // @Watch('user')
-  // watchAuth(newVal: User, oldVal: User) {
-  //   if (newVal) {
-  //     this.getJobs(this.user.id);
-  //   }
-  // }
-
   mounted() {
     this.getApplications();
   }
@@ -162,12 +155,6 @@ export default class Jobs extends Vue {
 
   handleRedirect(item: Application) {
     this.$router.push(`/admin/applications/${item.id}`);
-    // this.$router.push({
-    //   path: `/admin/applications/${item.id}`,
-    //   query: {
-    //     user_id: item.user.id
-    //   }
-    // });
   }
 }
 </script>
