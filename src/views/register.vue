@@ -3,26 +3,6 @@
     <div class="auth-form">
       <form v-if="!isSuccess">
         <h1 class="mb-5">Đăng ký</h1>
-        <!-- <div class="form-group">
-          <label class="font-weight-bold" for="">Họ và tên</label>
-          <input type="text"
-            class="form-control"
-            id="exampleInputUsername"
-            placeholder="Vui lòng nhập họ và tên"
-            v-model="user.displayName"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="font-weight-bold" for="">Số điện thoại</label>
-          <input type="number"
-            class="form-control"
-            id="exampleInputNumber"
-            placeholder="Vui lòng nhập số điện thoại"
-            v-model="user.phoneNumber"
-          />
-        </div> -->
-
         <div class="form-group">
           <label class="font-weight-bold" for="">Địa chỉ email</label>
           <input type="email"
@@ -43,15 +23,6 @@
             v-model="auth.password"
           />
         </div>
-
-        <!-- <div class="form-group">
-          <label class="font-weight-bold" for="">Nhập lại mật khẩu</label>
-          <input type="password"
-            class="form-control"
-            id="exampleInputConfirmPassword"
-            placeholder="Vui lòng nhập lại mật khẩu"
-          />
-        </div> -->
 
         <button
           type="button"
@@ -74,14 +45,6 @@
           Quay lại đăng nhập
         </button>
       </div>
-
-      <!-- <p class="auth-form__footer mt-5 mb-0">
-        Bạn đã có tài khoản?
-        <router-link
-          to="/login">
-          Đăng nhập
-        </router-link>
-      </p> -->
     </div>
   </div>
 </template>
