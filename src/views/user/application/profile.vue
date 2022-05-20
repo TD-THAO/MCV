@@ -271,9 +271,8 @@
 </template>
 
 <script lang='ts'>
-import range from 'lodash/range';
-import { mapActions, mapGetters, mapState } from 'vuex';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 
 import PageLoader from '@/components/PageLoader.vue';
