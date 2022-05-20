@@ -44,7 +44,6 @@ import PageLoader from '@/components/PageLoader.vue';
 import JobApi from '@/shared/api/Job';
 import Toast from '@/shared/utils/Toast';
 import { Job } from '@/shared/models/job';
-import { Authenticate } from '@/shared/models/authenticate';
 import { User } from '@/shared/models/user';
 import UserApi from '@/shared/api/User';
 
@@ -57,7 +56,6 @@ import UserApi from '@/shared/api/User';
 })
 export default class Jobs extends Vue {
   jobs:Job[] = [];
-  auth: Authenticate = new Authenticate();
   isLoading: boolean = false;
   user: User = new User();
 
@@ -93,18 +91,12 @@ export default class Jobs extends Vue {
   }
 
   checkLogin(item: Job) {
-    const _ref = this;
-    firebase.auth().onAuthStateChanged((user: any) => {
-      if (user) {
-        user.providerData.forEach((res: Authenticate) => {
-          _ref.auth = new Authenticate().deserialize(res);
-          _ref.auth.uid = user.uid;
-        });
-        this.getUserInfo(this.auth.uid, item)
-      } else {
-        this.$router.push('/login');
-      }
-    });
+    const user: any = firebase.auth().currentUser;
+    if (user) {
+      this.getUserInfo(user.uid, item)
+    } else {
+      this.$router.push('/login');
+    }
   }
 
   getUserInfo(uid: string, item: Job) {

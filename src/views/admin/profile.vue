@@ -154,17 +154,17 @@ export default class PersonalInfomation extends Vue {
   isLoading: boolean = false;
 
   updateInfo() {
-    // this.isLoading = true;
-    // // this.user.role = 'ADMIN';
-    // UserApi.update(this.user.id, this.user.formJSONString())
-    // .then((res: any) => {
-    //   Toast.success('Cập nhật thông tin thành công');
-    //   this.isLoading = false;
-    // })
-    // .catch((error: any) => {
-    //   this.isLoading = false;
-    //   Toast.handleError(error);
-    // });
+    this.isLoading = true;
+    this.user.role = 'ADMIN';
+    UserApi.update(this.user.id, this.user.formJSONString())
+    .then((res: any) => {
+      Toast.success('Cập nhật thông tin thành công');
+      this.isLoading = false;
+    })
+    .catch((error: any) => {
+      this.isLoading = false;
+      Toast.handleError(error);
+    });
   }
 }
 </script>
