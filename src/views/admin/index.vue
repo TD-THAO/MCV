@@ -25,6 +25,7 @@ import Header from '@/layouts/Header.vue';
 import Sidebar from '@/layouts/Sidebar.vue';
 import PageLoader from '@/components/PageLoader.vue';
 
+import { Authenticate } from '@/shared/models/authenticate';
 import { User } from '@/shared/models/user';
 import UserApi from '@/shared/api/User';
 import Toast from '@/shared/utils/Toast';
@@ -37,6 +38,7 @@ import Toast from '@/shared/utils/Toast';
   },
 })
 export default class ManagerApplication extends Vue {
+  auth: Authenticate = new Authenticate();
   user: User = new User();
   isLoading: boolean = false;
 
@@ -45,12 +47,18 @@ export default class ManagerApplication extends Vue {
   }
 
   checkLogin() {
-    const user = firebase.auth().currentUser;
-    if (user) {
-      this.getUserInfo(user.uid)
-    } else {
-      this.$router.push('/login');
-    }
+    const _ref = this;
+    firebase.auth().onAuthStateChanged((user: any) => {
+      if (user) {
+        user.providerData.forEach((res: Authenticate) => {
+          _ref.auth = new Authenticate().deserialize(res);
+          _ref.auth.uid = user.uid;
+        });
+        this.getUserInfo(this.auth.uid)
+      } else {
+        this.$router.push('/login');
+      }
+    });
   }
 
   getUserInfo(uid: string) {
