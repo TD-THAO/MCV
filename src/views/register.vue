@@ -80,7 +80,7 @@ export default class Register extends Vue {
     });
   }
 
-  private createUserInfor(auth: Authenticate) {
+  createUserInfor(auth: Authenticate) {
     const dataSet = new User();
     dataSet.email = auth.email;
     dataSet.id = auth.uid;
